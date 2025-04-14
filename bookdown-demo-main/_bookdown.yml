@@ -9,3 +9,5 @@ rmd_files: [
   "01-intro.Rmd",
   "06-references.Rmd"
 ]
+
+output_dir: "docs"
