@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Series de tiempo - Online Retail</title>
+  <meta name="description" content="Análisis de series de tiempo aplicadas al comportamiento de compras online." />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Series de tiempo - Online Retail" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Análisis de series de tiempo aplicadas al comportamiento de compras online." />
+  <meta name="github-repo" content="looocust/TimeSeries" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Series de tiempo - Online Retail" />
+  
+  <meta name="twitter:description" content="Análisis de series de tiempo aplicadas al comportamiento de compras online." />
+  
+
+<meta name="author" content="Joaquin Nicolas Mejia Romero" />
+
+
+<meta name="date" content="2025-04-13" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+
+<link rel="next" href="introducción.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Propuesta de análisis</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#tema-pronóstico-de-comportamiento-de-compras-en-e-commerce"><i class="fa fa-check"></i><b>1.1</b> Tema: Pronóstico de comportamiento de compras en e-commerce</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="index.html"><a href="index.html#justificación"><i class="fa fa-check"></i><b>1.1.1</b> Justificación</a></li>
+<li class="chapter" data-level="1.1.2" data-path="index.html"><a href="index.html#fuente-de-datos"><i class="fa fa-check"></i><b>1.1.2</b> Fuente de datos</a></li>
+<li class="chapter" data-level="1.1.3" data-path="index.html"><a href="index.html#licencia-y-permisos"><i class="fa fa-check"></i><b>1.1.3</b> Licencia y permisos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>2</b> Introducción</a></li>
+<li class="chapter" data-level="3" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i><b>3</b> Referencias</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Series de tiempo - Online Retail</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">Series de tiempo - Online Retail</h1>
+<p class="author"><em>Joaquin Nicolas Mejia Romero</em></p>
+<p class="date"><em>2025-04-13</em></p>
+</div>
+<div id="propuesta-de-análisis" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">Capítulo 1</span> Propuesta de análisis<a href="index.html#propuesta-de-análisis" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="tema-pronóstico-de-comportamiento-de-compras-en-e-commerce" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> Tema: Pronóstico de comportamiento de compras en e-commerce<a href="index.html#tema-pronóstico-de-comportamiento-de-compras-en-e-commerce" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>El presente análisis utilizará el conjunto de datos “Online Retail” proveniente del repositorio de aprendizaje automático de la Universidad de California en Irvine (UCI Machine Learning Repository). Este dataset contiene transacciones de una empresa minorista en línea del Reino Unido durante el periodo de diciembre de 2010 a diciembre de 2011. Las variables disponibles incluyen número de factura, código y descripción del producto, cantidad, fecha, precio unitario, ID de cliente y país.</p>
+<div id="justificación" class="section level3 hasAnchor" number="1.1.1">
+<h3><span class="header-section-number">1.1.1</span> Justificación<a href="index.html#justificación" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El análisis de series de tiempo aplicado a datos de e-commerce permite anticipar comportamientos de compra, optimizar inventarios, planificar campañas promocionales y prever picos de demanda. El valor agregado de este análisis radica en identificar patrones de compra estacionales, detectar tendencias de consumo por producto o país, y generar modelos predictivos que ayuden a mejorar la toma de decisiones estratégicas en comercio electrónico.</p>
+<p>Durante este curso, se desarrollará un modelo que permita pronosticar el número de órdenes y/o cantidad total vendida por semana o mes, dependiendo de los hallazgos en el análisis exploratorio. Se buscará capturar estacionalidades propias del retail online, como las temporadas navideñas o promociones puntuales, y su impacto en el comportamiento del cliente. Así mismo, se considerará la descomposición de la serie temporal y la comparación de modelos (ARIMA, Prophet y modelos automatizados).</p>
+</div>
+<div id="fuente-de-datos" class="section level3 hasAnchor" number="1.1.2">
+<h3><span class="header-section-number">1.1.2</span> Fuente de datos<a href="index.html#fuente-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El conjunto de datos fue obtenido del <a href="https://archive.ics.uci.edu/dataset/352/online+retail">UCI Machine Learning Repository</a>, es de acceso libre y gratuito, y no requiere permisos especiales para su uso académico. Fue recopilado originalmente por una compañía de e-commerce del Reino Unido y anonimizado para fines investigativos.</p>
+</div>
+<div id="licencia-y-permisos" class="section level3 hasAnchor" number="1.1.3">
+<h3><span class="header-section-number">1.1.3</span> Licencia y permisos<a href="index.html#licencia-y-permisos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>La información es pública y no compromete datos sensibles. Será usada exclusivamente con fines académicos y de aprendizaje en el marco del curso de Análisis de Series de Tiempo de la Pontificia Universidad Javeriana.</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+<a href="introducción.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rstudio/bookdown-demo/edit/master/index.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["series-online-retail.pdf", "series-online-retail.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>
