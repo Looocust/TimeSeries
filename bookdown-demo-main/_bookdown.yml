@@ -1,0 +1,11 @@
+book_filename: "series-online-retail"
+language:
+  ui:
+    chapter_name: "Capítulo "
+delete_merged_file: true
+
+rmd_files: [
+  "index.Rmd",
+  "01-intro.Rmd",
+  "06-references.Rmd"
+]
