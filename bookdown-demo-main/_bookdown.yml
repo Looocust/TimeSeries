@@ -1,3 +1,4 @@
+# _bookdown.yml  (ajústalo y guarda)
 book_filename: "series-online-retail"
 language:
   ui:
@@ -7,8 +8,10 @@ delete_merged_file: true
 rmd_files: [
   "index.Rmd",
   "01-intro.Rmd",
-  "02-literature.Rmd",
+  "02-literature.Rmd",   # ése es tu nuevo capítulo
   "06-references.Rmd"
 ]
 
-output_dir: "docs"
+# carpeta docs de la RAÍZ del repo
+output_dir: "../docs"
+# quita o cambia la línea toc.before si aún dice "A Minimal Book Example"
