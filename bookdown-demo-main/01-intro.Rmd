@@ -1,0 +1,7 @@
+# Introducción
+
+El análisis de series de tiempo es fundamental en distintos sectores como las finanzas, el comercio, la salud y la logística, ya que permite predecir comportamientos futuros basándose en datos históricos. En este trabajo aplicaremos estas técnicas al entorno del comercio electrónico, específicamente utilizando el conjunto de datos “Online Retail”.
+
+La importancia de aplicar series de tiempo en este contexto radica en la posibilidad de anticipar patrones de compra, identificar estacionalidades y tomar decisiones informadas que optimicen la planificación de inventarios, campañas de marketing y niveles de atención al cliente.
+
+Este mini-libro documentará el proceso paso a paso, desde el análisis exploratorio de datos, pasando por la transformación de las series, hasta la aplicación de modelos predictivos como ARIMA, Prophet o redes neuronales, según la complejidad observada.
