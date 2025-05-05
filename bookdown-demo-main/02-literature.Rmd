@@ -3,8 +3,7 @@
 
 
 ```{r setup, message=FALSE}
-# Instalar una sola vez si no los tienes
-# install.packages(c("tidyverse", "readxl", "lubridate", "zoo", "forecast"))
+# Se instala lo necesario para proceder
 
 library(tidyverse)   # dplyr, ggplot2, etc.
 library(readxl)      # leer archivos .xlsx
