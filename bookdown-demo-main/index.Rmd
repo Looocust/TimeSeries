@@ -1,6 +1,6 @@
 --- 
 title: "Series de tiempo - Online Retail"
-author: "Joaquin Nicolas Mejia Romero"
+author: "Joaquin Mejia & Deisy Forero"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
