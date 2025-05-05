@@ -9,7 +9,7 @@ bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
 github-repo: looocust/TimeSeries
-description: "Análisis de series de tiempo aplicadas al comportamiento de compras online."
+description: "Análisis de series de tiempo aplicadas al comportamiento de compras online del 2010 al 2011."
 ---
 
 # Propuesta de análisis
