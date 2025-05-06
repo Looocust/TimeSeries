@@ -1,4 +1,4 @@
-# En busca de los datos 
+# Modulo 1. Descripción. ¿Cuál es la dinámica de este tipo de datos?
 
 
 
@@ -114,6 +114,103 @@ autoplot(decomp) +
   labs(title = "Descomposición STL: tendencia, estacionalidad y residuales")
 ```
 El componente seasonal presenta oscilaciones regulares cada 7 puntos, confirmando efecto semanal; la tendencia suavizada muestra un crecimiento paulatino en la demanda.
+
+
+
+PRUEBAS DE ESTACIONARIEDAD (ADF & KPSS)
+
+```{r adf-kpss, message=FALSE, warning=FALSE}
+library(tseries)
+
+#––– 1. Dickey–Fuller aumentada –––#
+adf_result  <- adf.test(ts_qty, alternative = "stationary")
+adf_result$p.value      # < 0.05  ⇒  estacionaria
+
+#––– 2. KPSS (complementaria) –––#
+kpss_result <- kpss.test(ts_qty, null = "Level")
+kpss_result$p.value     # > 0.05  ⇒  no se rechaza estacionariedad
+
+```
+
+En este caso podemos evidenciar que las dos pruebas miran la estacionariedad desde lados opuestos:
+
+La ADF busca evidencia de que hay una tendencia aleatoria, y si la p-value es baja, dice que no la hay → entonces la serie es estacionaria.
+
+La KPSS parte diciendo que la serie sí es estacionaria, y si la p-value es baja, entonces te dice no confíes, no lo es.
+
+ADF = 0.01 ⇒ la serie podría ser estacionaria
+
+KPSS = 0.01 ⇒ la serie no lo es
+
+📌 Cuando ambas pruebas contradicen, se interpreta que la serie:
+
+➤ No es estacionaria en nivel,
+pero podría volverse estacionaria si quitamos la tendencia
+(es decir, con una diferenciación o eliminando tendencia).
+
+
+
+```{r}
+ts_qty <- ts(daily_sales$TotalQty, frequency = 7)
+
+ts_diff1 <- diff(ts_qty, 1)
+
+# Graficamos para ver cómo luce
+autoplot(ts_diff1) + 
+  labs(title = "Serie diferenciada (orden 1)", y = "Diferencias")
+
+# Nuevas pruebas
+adf.test(ts_diff1)
+kpss.test(ts_diff1, null = "Level")
+
+```
+
+
+
+```{r}
+adf.test(ts_diff1)
+kpss.test(ts_diff1, null = "Level")
+
+```
+Al aplicar las pruebas de estacionariedad a la serie original, se obtuvieron resultados contradictorios: la prueba de Dickey–Fuller aumentada (ADF) arrojó un p-valor de 0.01, indicando estacionariedad, mientras que la prueba KPSS entregó un p-valor de 0.01, rechazando la hipótesis de estacionariedad.
+
+Esto sugiere que la serie no es estacionaria en nivel y presenta una tendencia determinista. Por tanto, se aplicó una diferenciación de primer orden, con el objetivo de eliminar la tendencia y estabilizar la media.
+
+Posteriormente, al evaluar la serie diferenciada:
+
+ADF mostró un p-valor de 0.01, lo que confirma estacionariedad, y
+
+KPSS arrojó un p-valor mayor a 0.1, lo que no rechaza la estacionariedad.
+
+Se concluye que la serie diferenciada es estacionaria, por lo que es adecuada para modelarse con técnicas como ARIMA o SARIMA, considerando un parámetro d = 1.
+
+### Transformación Box-Cox
+
+```{r}
+library(forecast)
+
+# Paso 1: Asegúrate de tener tu serie definida
+ts_qty <- ts(daily_sales$TotalQty, frequency = 7)
+
+# Paso 2: Calcula lambda
+lambda <- BoxCox.lambda(ts_qty)
+
+# Paso 3: Aplica la transformación
+ts_boxcox <- BoxCox(ts_qty, lambda = lambda)
+
+# Paso 4: Grafica
+autoplot(ts_boxcox) +
+  labs(title = paste("Transformación Box-Cox con lambda =", round(lambda, 2)),
+       y = "Ventas transformadas")
+
+
+```
+
+Con el fin de estabilizar la varianza de la serie `TotalQty`, se aplicó una transformación Box-Cox, la cual estima automáticamente el parámetro λ (lambda). En este caso, el valor obtenido fue λ = 0.47, lo que indica que la serie original presenta cierta heterocedasticidad (variación de la varianza en el tiempo).
+
+La transformación tuvo como objetivo suavizar las fluctuaciones extremas de la serie, logrando una distribución más simétrica y facilitando su uso en modelos como ARIMA o SARIMA. En el gráfico se observa una reducción parcial de los picos más altos y una mayor estabilidad en la amplitud de las oscilaciones.
+
+Por tanto, se concluye que la aplicación de la transformación Box-Cox **fue útil** para mejorar la estructura estadística de la serie antes de su modelado.
 
 
 
