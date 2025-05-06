@@ -18,3 +18,5 @@ introducción
 referencias
 unidad-2
 en-busca-de-los-datos
+modulo-1.-descripción.-cuál-es-la-dinámica-de-este-tipo-de-datos
+transformación-box-cox

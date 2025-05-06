@@ -13,5 +13,5 @@ rmd_files: [
 ]
 
 # carpeta docs de la RAÍZ del repo
-output_dir: "docs"
+output_dir: "../docs"
 # quita o cambia la línea toc.before si aún dice "A Minimal Book Example"
