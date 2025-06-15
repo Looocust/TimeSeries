@@ -1,4 +1,0 @@
-# Referencias
-
-- Dua, D. and Graff, C. (2017). UCI Machine Learning Repository.
-- Hyndman, R.J. & Athanasopoulos, G. (2021). *Forecasting: Principles and Practice*. OTexts.
