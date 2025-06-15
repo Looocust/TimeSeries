@@ -66,3 +66,7 @@ conclusión-2
 relevancia-de-los-datos-y-aprendizajes-modelo-a-modelo
 lecciones-interpretativas
 conclusiones
+evaluación-del-error-durante-el-entrenamiento-de-la-red-elman
+evaluación-del-modelo-elman-predicción-sobre-datos-no-entrenados-1
+referencias-bibliográficas
+referencias-bibliográficas-1

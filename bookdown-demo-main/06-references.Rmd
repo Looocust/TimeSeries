@@ -1,4 +1,36 @@
-# Referencias
+## Referencias bibliográficas
 
-- Dua, D. and Graff, C. (2017). UCI Machine Learning Repository.
-- Hyndman, R.J. & Athanasopoulos, G. (2021). *Forecasting: Principles and Practice*. OTexts.
+- Box, G. E. P., Jenkins, G. M., Reinsel, G. C., & Ljung, G. M. (2015). *Time Series Analysis: Forecasting and Control* (5.ª ed.). John Wiley & Sons.
+
+- Dickey, D. A., & Fuller, W. A. (1979). Distribution of the estimators for autoregressive time series with a unit root. *Journal of the American Statistical Association*, 74(366), 427-431.
+
+- Hyndman, R. J., & Athanasopoulos, G. (2021). *Forecasting: Principles and Practice* (3.ª ed.). OTexts.  
+  <https://otexts.com/fpp3/>
+
+- Hyndman, R. J., & Khandakar, Y. (2008). Automatic time series forecasting: the forecast package for R. *Journal of Statistical Software*, 27(3), 1-22.
+
+- Taylor, S. J., & Letham, B. (2018). Forecasting at scale. *The American Statistician*, 72(1), 37-45.  
+  (Artículo original que presenta el algoritmo **Prophet**).
+
+- Elman, J. L. (1990). Finding structure in time. *Cognitive Science*, 14(2), 179-211.  
+  (Propone la red neuronal recurrente **Elman**).
+
+- Jordan, M. I. (1986). Serial order: A parallel distributed processing approach. *Institute for Cognitive Science Report 8604*, University of California, San Diego.  
+  (Documento fundacional de la arquitectura **Jordan**).
+
+- Hornik, K., Feinerer, I., Fritsch, S., & Buchta, C. (2013). *RSNNS: Neural Networks in R Using the Stuttgart Neural Network Simulator*. R package version 0.4-17.  
+  <https://CRAN.R-project.org/package=RSNNS>
+
+- Hamilton, J. D. (1994). *Time Series Analysis*. Princeton University Press.  
+  (Marco teórico para la modelización ARIMA y pruebas de raíz unitaria).
+
+- Box, G. E. P., & Cox, D. R. (1964). An analysis of transformations. *Journal of the Royal Statistical Society: Series B*, 26(2), 211-252.  
+  (Fundamento de la transformación **Box–Cox**).
+
+- Friedman, J., Hastie, T., & Tibshirani, R. (2009). *The Elements of Statistical Learning* (2.ª ed.). Springer.  
+  (Capítulos sobre redes neuronales y métodos de suavizamiento).
+
+- Goodfellow, I., Bengio, Y., & Courville, A. (2016). *Deep Learning*. MIT Press.  
+  (Referencia general de aprendizaje profundo que contextualiza las RNN).
+
+*(Incluye los enlaces o DOI correspondientes según el estilo bibliográfico de tu institución).*

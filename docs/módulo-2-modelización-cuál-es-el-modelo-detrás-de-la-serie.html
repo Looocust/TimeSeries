@@ -201,7 +201,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="6.0.1" data-path="conclusiones.html"><a href="conclusiones.html#lecciones-interpretativas"><i class="fa fa-check"></i><b>6.0.1</b> Lecciones interpretativas</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i><b>7</b> Referencias</a></li>
+<li class="chapter" data-level="7" data-path="referencias-bibliográficas.html"><a href="referencias-bibliográficas.html"><i class="fa fa-check"></i><b>7</b> Referencias bibliográficas</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="referencias-bibliográficas.html"><a href="referencias-bibliográficas.html#referencias-bibliográficas-1"><i class="fa fa-check"></i><b>7.1</b> Referencias bibliográficas</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -726,20 +729,20 @@ El componente estacional muestra cómo varían las ventas a lo largo de los día
 <span id="cb71-4"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb71-4" tabindex="-1"></a><span class="co"># Ver las primeras filas del resultado</span></span>
 <span id="cb71-5"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb71-5" tabindex="-1"></a><span class="fu">head</span>(forecast_prophet[, <span class="fu">c</span>(<span class="st">&quot;ds&quot;</span>, <span class="st">&quot;yhat&quot;</span>, <span class="st">&quot;yhat_lower&quot;</span>, <span class="st">&quot;yhat_upper&quot;</span>)], <span class="dv">14</span>)</span></code></pre></div>
 <pre><code>##            ds      yhat yhat_lower yhat_upper
-## 1  2010-12-01 14984.677   7218.682   23757.16
-## 2  2010-12-02 18677.764  10136.463   27240.65
-## 3  2010-12-03 12301.689   4415.796   20818.82
-## 4  2010-12-05  5955.892  -2372.475   14532.56
-## 5  2010-12-06 13820.646   5778.655   22648.82
-## 6  2010-12-07 15131.844   7158.365   23554.69
-## 7  2010-12-08 14955.427   6899.923   23354.40
-## 8  2010-12-09 18648.513  10199.721   27244.01
-## 9  2010-12-10 12272.438   3443.216   20996.00
-## 10 2010-12-12  5926.642  -2438.790   13588.46
-## 11 2010-12-13 13791.396   5442.553   22497.94
-## 12 2010-12-14 15102.593   6344.085   23023.89
-## 13 2010-12-15 14926.176   6357.617   22720.15
-## 14 2010-12-16 18619.262  10530.711   26783.39</code></pre>
+## 1  2010-12-01 14984.677   6847.875   22558.63
+## 2  2010-12-02 18677.764  10582.451   26561.83
+## 3  2010-12-03 12301.689   4562.037   20538.05
+## 4  2010-12-05  5955.892  -2262.815   14633.21
+## 5  2010-12-06 13820.646   5842.984   22500.42
+## 6  2010-12-07 15131.844   6244.933   23317.78
+## 7  2010-12-08 14955.427   6370.968   23579.75
+## 8  2010-12-09 18648.513  10751.168   27144.05
+## 9  2010-12-10 12272.438   3577.480   20207.80
+## 10 2010-12-12  5926.642  -2540.897   13969.35
+## 11 2010-12-13 13791.396   6055.126   22582.00
+## 12 2010-12-14 15102.593   6920.966   23624.53
+## 13 2010-12-15 14926.176   6485.589   22628.60
+## 14 2010-12-16 18619.262  10236.880   26924.33</code></pre>
 <div id="visualización-del-pronóstico-con-modelo-prophet" class="section level3 hasAnchor" number="4.6.1">
 <h3><span class="header-section-number">4.6.1</span> Visualización del pronóstico con modelo Prophet<a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#visualización-del-pronóstico-con-modelo-prophet" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>La siguiente gráfica muestra el pronóstico generado por el modelo Prophet para los próximos 14 días, sobre la serie de ventas diarias:</p>
