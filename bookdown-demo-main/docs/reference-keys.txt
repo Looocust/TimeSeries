@@ -1,0 +1,10 @@
+propuesta-de-análisis
+tema-pronóstico-de-comportamiento-de-compras-en-e-commerce
+justificación
+fuente-de-datos
+licencia-y-permisos
+introducción
+referencias
+en-busca-de-los-datos
+modulo-1.-descripción.-cuál-es-la-dinámica-de-este-tipo-de-datos
+transformación-box-cox

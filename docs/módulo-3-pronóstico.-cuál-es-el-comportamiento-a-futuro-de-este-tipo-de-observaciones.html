@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 5 Módulo 3: Pronóstico. Cuál es el comportamiento a futuro de este tipo de observaciones? | Series de tiempo - Online Retail</title>
+  <meta name="description" content="Análisis de series de tiempo aplicadas al comportamiento de compras online del 2010 al 2011" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 5 Módulo 3: Pronóstico. Cuál es el comportamiento a futuro de este tipo de observaciones? | Series de tiempo - Online Retail" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Análisis de series de tiempo aplicadas al comportamiento de compras online del 2010 al 2011" />
+  <meta name="github-repo" content="looocust/TimeSeries" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 5 Módulo 3: Pronóstico. Cuál es el comportamiento a futuro de este tipo de observaciones? | Series de tiempo - Online Retail" />
+  
+  <meta name="twitter:description" content="Análisis de series de tiempo aplicadas al comportamiento de compras online del 2010 al 2011" />
+  
+
+<meta name="author" content="Joaquin Mejia &amp; Deisy Forero" />
+
+
+<meta name="date" content="2025-06-15" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"/>
+<link rel="next" href="conclusiones.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Propuesta de análisis</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#tema-pronóstico-de-comportamiento-de-compras-en-e-commerce"><i class="fa fa-check"></i><b>1.1</b> Tema: Pronóstico de comportamiento de compras en e-commerce</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="index.html"><a href="index.html#justificación"><i class="fa fa-check"></i><b>1.1.1</b> Justificación</a></li>
+<li class="chapter" data-level="1.1.2" data-path="index.html"><a href="index.html#fuente-de-datos"><i class="fa fa-check"></i><b>1.1.2</b> Fuente de datos</a></li>
+<li class="chapter" data-level="1.1.3" data-path="index.html"><a href="index.html#licencia-y-permisos"><i class="fa fa-check"></i><b>1.1.3</b> Licencia y permisos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>2</b> Introducción</a></li>
+<li class="chapter" data-level="3" data-path="modulo-1.-descripción.-cuál-es-la-dinámica-de-este-tipo-de-datos.html"><a href="modulo-1.-descripción.-cuál-es-la-dinámica-de-este-tipo-de-datos.html"><i class="fa fa-check"></i><b>3</b> Modulo 1. Descripción. ¿Cuál es la dinámica de este tipo de datos?</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="modulo-1.-descripción.-cuál-es-la-dinámica-de-este-tipo-de-datos.html"><a href="modulo-1.-descripción.-cuál-es-la-dinámica-de-este-tipo-de-datos.html#transformación-box-cox"><i class="fa fa-check"></i><b>3.1</b> Transformación Box-Cox</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><i class="fa fa-check"></i><b>4</b> Módulo 2: Modelización ¿Cuál es el modelo detrás de la serie?</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#pronóstico-con-modelo-holt-winters-aditivo"><i class="fa fa-check"></i><b>4.1</b> Pronóstico con modelo Holt-Winters aditivo</a></li>
+<li class="chapter" data-level="4.2" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#evaluación-y-comparación-de-precisión-ses-vs-holt-winters"><i class="fa fa-check"></i><b>4.2</b> Evaluación y comparación de precisión: SES vs Holt-Winters</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#análisis"><i class="fa fa-check"></i><b>4.2.1</b> Análisis:</a></li>
+<li class="chapter" data-level="4.2.2" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#comparación-visual-de-pronósticos-ses-vs-holt-winters"><i class="fa fa-check"></i><b>4.2.2</b> Comparación visual de pronósticos: SES vs Holt-Winters</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#ajuste-de-modelo-arima-usando-metodología-box-jenkins"><i class="fa fa-check"></i><b>4.3</b> Ajuste de modelo ARIMA usando metodología Box-Jenkins</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#verificación-de-estacionariedad"><i class="fa fa-check"></i><b>4.3.1</b> Verificación de estacionariedad</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#diferencia-de-series---diferenciación-de-primer-orden"><i class="fa fa-check"></i><b>4.4</b> Diferencia de series - Diferenciación de primer orden</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#verificación-de-estacionariedad-sobre-la-serie-diferenciada"><i class="fa fa-check"></i><b>4.4.1</b> Verificación de estacionariedad sobre la serie diferenciada</a></li>
+<li class="chapter" data-level="4.4.2" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#interpretación-conjunta"><i class="fa fa-check"></i><b>4.4.2</b> Interpretación conjunta:</a></li>
+<li class="chapter" data-level="4.4.3" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#paso-3-ajuste-automático-del-modelo-arima"><i class="fa fa-check"></i><b>4.4.3</b> Paso 3: Ajuste automático del modelo ARIMA</a></li>
+<li class="chapter" data-level="4.4.4" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#métricas-del-modelo"><i class="fa fa-check"></i><b>4.4.4</b> Métricas del modelo</a></li>
+<li class="chapter" data-level="4.4.5" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#paso-4-pronóstico-de-ventas-con-modelo-arima510"><i class="fa fa-check"></i><b>4.4.5</b> Paso 4: Pronóstico de ventas con modelo ARIMA(5,1,0)</a></li>
+<li class="chapter" data-level="4.4.6" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#comparación-de-modelos-arima-vs-holt-winters"><i class="fa fa-check"></i><b>4.4.6</b> Comparación de modelos: ARIMA vs Holt-Winters</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#regresión-en-series-de-tiempo"><i class="fa fa-check"></i><b>4.5</b> Regresión en series de tiempo</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#ajuste-del-modelo-prophet-y-visualización-del-pronóstico"><i class="fa fa-check"></i><b>4.5.1</b> Ajuste del modelo Prophet y visualización del pronóstico</a></li>
+<li class="chapter" data-level="4.5.2" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#análisis-de-componentes-del-modelo-prophet"><i class="fa fa-check"></i><b>4.5.2</b> Análisis de Componentes del Modelo Prophet</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#predicción-con-prophet"><i class="fa fa-check"></i><b>4.6</b> Predicción con Prophet</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#visualización-del-pronóstico-con-modelo-prophet"><i class="fa fa-check"></i><b>4.6.1</b> Visualización del pronóstico con modelo Prophet</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html"><i class="fa fa-check"></i><b>5</b> Módulo 3: Pronóstico. Cuál es el comportamiento a futuro de este tipo de observaciones?</a>
+<ul>
+<li class="chapter" data-level="5.0.1" data-path="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#entrenamiento-del-modelo-elman"><i class="fa fa-check"></i><b>5.0.1</b> Entrenamiento del modelo Elman</a></li>
+<li class="chapter" data-level="5.0.2" data-path="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#evaluación-del-modelo-elman-predicción-sobre-datos-no-entrenados"><i class="fa fa-check"></i><b>5.0.2</b> Evaluación del modelo Elman: predicción sobre datos no entrenados</a></li>
+<li class="chapter" data-level="5.0.3" data-path="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#mejorando-el-modelo"><i class="fa fa-check"></i><b>5.0.3</b> Mejorando el modelo</a></li>
+<li class="chapter" data-level="5.0.4" data-path="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#evaluación-del-modelo-jordan-predicción-sobre-datos-no-entrenados"><i class="fa fa-check"></i><b>5.0.4</b> Evaluación del modelo Jordan: predicción sobre datos no entrenados</a></li>
+<li class="chapter" data-level="5.0.5" data-path="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#modelo-jordan-con-mayor-cantidad-de-datos"><i class="fa fa-check"></i><b>5.0.5</b> Modelo Jordan con mayor cantidad de datos</a></li>
+<li class="chapter" data-level="5.0.6" data-path="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#evaluación-del-modelo-jordan-con-mayor-cantidad-de-datos"><i class="fa fa-check"></i><b>5.0.6</b> Evaluación del modelo Jordan con mayor cantidad de datos</a></li>
+<li class="chapter" data-level="5.0.7" data-path="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#comparación-con-el-modelo-elman"><i class="fa fa-check"></i><b>5.0.7</b> Comparación con el modelo Elman</a></li>
+<li class="chapter" data-level="5.0.8" data-path="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#conclusión-2"><i class="fa fa-check"></i><b>5.0.8</b> Conclusión</a></li>
+<li class="chapter" data-level="5.1" data-path="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#por-qué-las-gráficas-dicen-datos-no-entrenados"><i class="fa fa-check"></i><b>5.1</b> ¿Por qué las gráficas dicen “datos no entrenados”?</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="conclusiones.html"><a href="conclusiones.html"><i class="fa fa-check"></i><b>6</b> Conclusiones</a>
+<ul>
+<li class="chapter" data-level="6.0.1" data-path="conclusiones.html"><a href="conclusiones.html#lecciones-interpretativas"><i class="fa fa-check"></i><b>6.0.1</b> Lecciones interpretativas</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i><b>7</b> Referencias</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Series de tiempo - Online Retail</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Capítulo 5</span> Módulo 3: Pronóstico. Cuál es el comportamiento a futuro de este tipo de observaciones?<a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>##Redes neuronales - Modelo Elman</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb74-1" tabindex="-1"></a><span class="fu">library</span>(RSNNS)</span>
+<span id="cb74-2"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb74-2" tabindex="-1"></a><span class="fu">library</span>(quantmod)</span></code></pre></div>
+<pre><code>## Loading required package: xts</code></pre>
+<pre><code>## 
+## ######################### Warning from &#39;xts&#39; package ##########################
+## #                                                                             #
+## # The dplyr lag() function breaks how base R&#39;s lag() function is supposed to  #
+## # work, which breaks lag(my_xts). Calls to lag(my_xts) that you type or       #
+## # source() into this session won&#39;t work correctly.                            #
+## #                                                                             #
+## # Use stats::lag() to make sure you&#39;re not using dplyr::lag(), or you can add #
+## # conflictRules(&#39;dplyr&#39;, exclude = &#39;lag&#39;) to your .Rprofile to stop           #
+## # dplyr from breaking base R&#39;s lag() function.                                #
+## #                                                                             #
+## # Code in packages is not affected. It&#39;s protected by R&#39;s namespace mechanism #
+## # Set `options(xts.warn_dplyr_breaks_lag = FALSE)` to suppress this warning.  #
+## #                                                                             #
+## ###############################################################################</code></pre>
+<pre><code>## 
+## Attaching package: &#39;xts&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     first, last</code></pre>
+<pre><code>## Loading required package: TTR</code></pre>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb80-1" tabindex="-1"></a><span class="fu">library</span>(zoo)  </span>
+<span id="cb80-2"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb80-2" tabindex="-1"></a><span class="co"># Transformar en objeto zoo</span></span>
+<span id="cb80-3"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb80-3" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">as.zoo</span>(daily_sales<span class="sc">$</span>TotalQty)</span>
+<span id="cb80-4"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb80-4" tabindex="-1"></a></span>
+<span id="cb80-5"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb80-5" tabindex="-1"></a><span class="co"># Crear lags (rezagos)</span></span>
+<span id="cb80-6"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb80-6" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">Lag</span>(y, <span class="at">k=</span><span class="dv">1</span>)</span>
+<span id="cb80-7"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb80-7" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">Lag</span>(y, <span class="at">k=</span><span class="dv">2</span>)</span>
+<span id="cb80-8"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb80-8" tabindex="-1"></a>x3 <span class="ot">&lt;-</span> <span class="fu">Lag</span>(y, <span class="at">k=</span><span class="dv">3</span>)</span>
+<span id="cb80-9"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb80-9" tabindex="-1"></a>x4 <span class="ot">&lt;-</span> <span class="fu">Lag</span>(y, <span class="at">k=</span><span class="dv">4</span>)</span>
+<span id="cb80-10"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb80-10" tabindex="-1"></a>x5 <span class="ot">&lt;-</span> <span class="fu">Lag</span>(y, <span class="at">k=</span><span class="dv">5</span>)</span>
+<span id="cb80-11"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb80-11" tabindex="-1"></a>x6 <span class="ot">&lt;-</span> <span class="fu">Lag</span>(y, <span class="at">k=</span><span class="dv">6</span>)</span>
+<span id="cb80-12"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb80-12" tabindex="-1"></a>x7 <span class="ot">&lt;-</span> <span class="fu">Lag</span>(y, <span class="at">k=</span><span class="dv">7</span>)</span>
+<span id="cb80-13"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb80-13" tabindex="-1"></a>x8 <span class="ot">&lt;-</span> <span class="fu">Lag</span>(y, <span class="at">k=</span><span class="dv">8</span>)</span>
+<span id="cb80-14"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb80-14" tabindex="-1"></a>x9 <span class="ot">&lt;-</span> <span class="fu">Lag</span>(y, <span class="at">k=</span><span class="dv">9</span>)</span>
+<span id="cb80-15"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb80-15" tabindex="-1"></a>x10 <span class="ot">&lt;-</span> <span class="fu">Lag</span>(y, <span class="at">k=</span><span class="dv">10</span>)</span></code></pre></div>
+<p>bloque para combinar todos los rezagos y eliminar los NA iniciales:</p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb81-1" tabindex="-1"></a><span class="co"># Combinar la serie original con los rezagos</span></span>
+<span id="cb81-2"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb81-2" tabindex="-1"></a>slog <span class="ot">&lt;-</span> <span class="fu">cbind</span>(y, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10)</span>
+<span id="cb81-3"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb81-3" tabindex="-1"></a></span>
+<span id="cb81-4"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb81-4" tabindex="-1"></a><span class="co"># Eliminar las primeras 10 filas con NA</span></span>
+<span id="cb81-5"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb81-5" tabindex="-1"></a>slog <span class="ot">&lt;-</span> slog[<span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>), ]</span></code></pre></div>
+<p>Definimos inputs y outputs</p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb82-1" tabindex="-1"></a><span class="co"># Inputs: las 10 columnas de rezagos (x1 a x10)</span></span>
+<span id="cb82-2"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb82-2" tabindex="-1"></a>inputs <span class="ot">&lt;-</span> slog[, <span class="dv">2</span><span class="sc">:</span><span class="dv">11</span>]</span>
+<span id="cb82-3"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb82-3" tabindex="-1"></a></span>
+<span id="cb82-4"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb82-4" tabindex="-1"></a><span class="co"># Output: la serie original (y)</span></span>
+<span id="cb82-5"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb82-5" tabindex="-1"></a>outputs <span class="ot">&lt;-</span> slog[, <span class="dv">1</span>]</span></code></pre></div>
+<p>Esto configura nuestro problema como:
+- Queremos predecir el valor actual (y)
+- usando los 10 valores anteriores (lags x1 a x10)</p>
+<p>Para dar un contexto lo que se esta haciendo con la red neuronal de Elman</p>
+<ol style="list-style-type: decimal">
+<li>Cargamos los datos diarios de ventas (daily_sales) y seleccionamos la variable TotalQty.
+<ol start="2" style="list-style-type: decimal">
+<li>Convertimos la serie en objeto zoo, porque necesitábamos crear rezagos (lags), que son valores anteriores de la misma serie. Esto es esencial porque:
+• En las series de tiempo, el valor actual depende de los anteriores.
+• Por eso, las redes neuronales recurrentes como Elman, aprenden a predecir basadas en valores previos.</li>
+<li>Creamos 10 columnas de rezagos (x1 a x10):
+Esto simula el efecto memoria necesario en el modelado secuencial. Con esto, tenemos una matriz donde cada fila representa el contexto de los 10 días anteriores para predecir el día actual.</li>
+<li>Definimos las variables:
+• inputs: contiene los 10 rezagos.
+• outputs: contiene el valor actual a predecir.</li>
+</ol></li>
+</ol>
+<div id="entrenamiento-del-modelo-elman" class="section level3 hasAnchor" number="5.0.1">
+<h3><span class="header-section-number">5.0.1</span> Entrenamiento del modelo Elman<a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#entrenamiento-del-modelo-elman" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Vamos a entrenar la red neuronal ahora. Usaremos:
+• 900 observaciones para entrenamiento (como sugiere el módulo),
+• 2 capas ocultas: una con 3 neuronas y otra con 2,
+• 5000 iteraciones para asegurar buen aprendizaje.</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb83-1" tabindex="-1"></a><span class="co"># Verificar tamaño real de inputs y outputs</span></span>
+<span id="cb83-2"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb83-2" tabindex="-1"></a><span class="fu">nrow</span>(inputs)</span></code></pre></div>
+<pre><code>## [1] 295</code></pre>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb85-1" tabindex="-1"></a><span class="fu">nrow</span>(outputs)</span></code></pre></div>
+<pre><code>## NULL</code></pre>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb87-1" tabindex="-1"></a>outputs <span class="ot">&lt;-</span> slog[,<span class="dv">1</span>]  <span class="co"># La primera columna es la variable objetivo (y)</span></span></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb88-1" tabindex="-1"></a><span class="co"># Crear vector de entrenamiento</span></span>
+<span id="cb88-2"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb88-2" tabindex="-1"></a>train <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">250</span></span>
+<span id="cb88-3"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb88-3" tabindex="-1"></a></span>
+<span id="cb88-4"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb88-4" tabindex="-1"></a><span class="co"># Entrenar red Elman</span></span>
+<span id="cb88-5"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb88-5" tabindex="-1"></a>fit_elman <span class="ot">&lt;-</span> <span class="fu">elman</span>(</span>
+<span id="cb88-6"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb88-6" tabindex="-1"></a>  inputs[train],</span>
+<span id="cb88-7"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb88-7" tabindex="-1"></a>  outputs[train],</span>
+<span id="cb88-8"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb88-8" tabindex="-1"></a>  <span class="at">size =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>),                <span class="co"># Capas ocultas: 3 y 2 neuronas</span></span>
+<span id="cb88-9"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb88-9" tabindex="-1"></a>  <span class="at">learnFuncParams =</span> <span class="fu">c</span>(<span class="fl">0.1</span>),      <span class="co"># Tasa de aprendizaje</span></span>
+<span id="cb88-10"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb88-10" tabindex="-1"></a>  <span class="at">maxit =</span> <span class="dv">5000</span>                   <span class="co"># Número máximo de iteraciones</span></span>
+<span id="cb88-11"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb88-11" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>•   Creamos una red neuronal Elman (recurrente), que:
+•   Usa 10 rezagos (lags) como entradas (inputs)
+•   Tiene dos capas ocultas con 3 y 2 neuronas respectivamente
+•   Se entrena con tasa de aprendizaje 0.1 y hasta 5000 iteraciones</code></pre>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb90-1" tabindex="-1"></a><span class="fu">plotIterativeError</span>(fit_elman)</span></code></pre></div>
+<p><img src="series-online-retail_files/figure-html/unnamed-chunk-30-1.png" width="672" />
+### Evaluación del Error durante el Entrenamiento de la Red Elman</p>
+<p>La evolución del error durante el entrenamiento se muestra en la siguiente gráfica, generada con la función <code>plotIterativeError()</code>:</p>
+<p>Aunque visualmente la gráfica parece presentar una línea plana, esto no implica que no haya ocurrido aprendizaje. El comportamiento se explica por las siguientes razones:</p>
+<ul>
+<li>El error ponderado (SSE) es inicialmente alto pero disminuye bruscamente en las primeras iteraciones, alcanzando una zona de estabilidad rápidamente.</li>
+<li>Debido a la escala del eje Y (con valores del orden de 10¹⁰), las pequeñas variaciones en el error no se aprecian fácilmente en el gráfico.</li>
+<li>Esto indica que la red logró un ajuste muy eficiente en las primeras fases del entrenamiento, lo cual es consistente con el comportamiento esperado cuando se aprende una estructura clara en los datos.</li>
+</ul>
+<p>Por lo tanto, podemos concluir que la red Elman <strong>converge rápidamente</strong> y que su entrenamiento fue exitoso desde el punto de vista de minimización del error.</p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb91-1" tabindex="-1"></a><span class="co"># Convertir output a vector</span></span>
+<span id="cb91-2"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb91-2" tabindex="-1"></a>real_values <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(outputs[<span class="sc">-</span>train])</span>
+<span id="cb91-3"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb91-3" tabindex="-1"></a></span>
+<span id="cb91-4"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb91-4" tabindex="-1"></a><span class="co"># Predecir los valores fuera del conjunto de entrenamiento</span></span>
+<span id="cb91-5"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb91-5" tabindex="-1"></a>pred_elman <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_elman, inputs[<span class="sc">-</span>train])</span>
+<span id="cb91-6"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb91-6" tabindex="-1"></a></span>
+<span id="cb91-7"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb91-7" tabindex="-1"></a><span class="co"># Graficar valores reales vs predict</span></span>
+<span id="cb91-8"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb91-8" tabindex="-1"></a><span class="fu">plot</span>(real_values, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="st">&quot;black&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>,</span>
+<span id="cb91-9"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb91-9" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Predicción de la red Elman sobre datos no entrenados&quot;</span>,</span>
+<span id="cb91-10"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb91-10" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Cantidad diaria de ventas&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Índice temporal&quot;</span>)</span>
+<span id="cb91-11"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb91-11" tabindex="-1"></a><span class="fu">lines</span>(pred_elman, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb91-12"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb91-12" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Real&quot;</span>, <span class="st">&quot;Predict&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;red&quot;</span>), <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="series-online-retail_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+</div>
+<div id="evaluación-del-modelo-elman-predicción-sobre-datos-no-entrenados" class="section level3 hasAnchor" number="5.0.2">
+<h3><span class="header-section-number">5.0.2</span> Evaluación del modelo Elman: predicción sobre datos no entrenados<a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#evaluación-del-modelo-elman-predicción-sobre-datos-no-entrenados" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A continuación se muestra la comparación entre los valores reales (línea negra) y los valores pronosticados (línea roja) generados por la red neuronal Elman sobre el conjunto de prueba (datos no utilizados en el entrenamiento):</p>
+<div id="interpretación-1" class="section level4 hasAnchor" number="5.0.2.1">
+<h4><span class="header-section-number">5.0.2.1</span> Interpretación<a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#interpretación-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<ul>
+<li>La red Elman fue entrenada con 250 observaciones históricas, utilizando 10 rezagos (lags) como variables predictoras.</li>
+<li>El modelo fue capaz de converger rápidamente durante el entrenamiento, tal como lo evidenció la gráfica del error iterativo. Sin embargo, al evaluar su capacidad de generalización, observamos que el modelo genera un pronóstico relativamente <strong>constante</strong> sobre los datos no vistos.</li>
+<li>Esta predicción plana indica que la red <strong>no logró capturar la dinámica compleja</strong> de la serie temporal en la fase de testeo.</li>
+<li>Posibles causas incluyen:
+<ul>
+<li>Un número limitado de observaciones para el entrenamiento.</li>
+<li>Un tamaño de red insuficiente para capturar patrones más complejos.</li>
+<li>Necesidad de ajustar parámetros como la tasa de aprendizaje, número de neuronas o capas ocultas.</li>
+</ul></li>
+</ul>
+<p>A pesar de ello, este comportamiento sigue siendo útil desde el punto de vista metodológico, ya que demuestra cómo la red Elman intenta estabilizar el pronóstico frente a datos no entrenados. Esto resalta la importancia de validar los modelos de redes neuronales no solo en entrenamiento, sino especialmente en predicciones sobre nuevos datos.</p>
+</div>
+</div>
+<div id="mejorando-el-modelo" class="section level3 hasAnchor" number="5.0.3">
+<h3><span class="header-section-number">5.0.3</span> Mejorando el modelo<a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#mejorando-el-modelo" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb92-1" tabindex="-1"></a><span class="co"># Cargar paquetes necesarios</span></span>
+<span id="cb92-2"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb92-2" tabindex="-1"></a><span class="fu">library</span>(RSNNS)</span>
+<span id="cb92-3"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb92-3" tabindex="-1"></a></span>
+<span id="cb92-4"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb92-4" tabindex="-1"></a><span class="co"># Convertir la serie diaria de ventas a objeto ts</span></span>
+<span id="cb92-5"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb92-5" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">ts</span>(daily_sales<span class="sc">$</span>TotalQty)</span>
+<span id="cb92-6"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb92-6" tabindex="-1"></a></span>
+<span id="cb92-7"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb92-7" tabindex="-1"></a><span class="co"># Crear rezagos: cada fila tiene [y_t, y_{t-1}, ..., y_{t-10}]</span></span>
+<span id="cb92-8"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb92-8" tabindex="-1"></a>slog <span class="ot">&lt;-</span> <span class="fu">embed</span>(y, <span class="dv">11</span>)</span>
+<span id="cb92-9"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb92-9" tabindex="-1"></a></span>
+<span id="cb92-10"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb92-10" tabindex="-1"></a><span class="co"># Separar entradas y salidas</span></span>
+<span id="cb92-11"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb92-11" tabindex="-1"></a>inputs <span class="ot">&lt;-</span> slog[, <span class="dv">2</span><span class="sc">:</span><span class="dv">11</span>]   <span class="co"># columnas con rezagos (10 anteriores)</span></span>
+<span id="cb92-12"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb92-12" tabindex="-1"></a>outputs <span class="ot">&lt;-</span> slog[, <span class="dv">1</span>]     <span class="co"># columna objetivo (valor actual)</span></span>
+<span id="cb92-13"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb92-13" tabindex="-1"></a></span>
+<span id="cb92-14"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb92-14" tabindex="-1"></a><span class="co"># Separar en entrenamiento (80%) y prueba (20%)</span></span>
+<span id="cb92-15"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb92-15" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)  <span class="co"># para reproducibilidad</span></span>
+<span id="cb92-16"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb92-16" tabindex="-1"></a>total_rows <span class="ot">&lt;-</span> <span class="fu">nrow</span>(inputs)</span>
+<span id="cb92-17"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb92-17" tabindex="-1"></a>train_size <span class="ot">&lt;-</span> <span class="fu">floor</span>(<span class="fl">0.8</span> <span class="sc">*</span> total_rows)</span>
+<span id="cb92-18"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb92-18" tabindex="-1"></a>train <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>train_size</span>
+<span id="cb92-19"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb92-19" tabindex="-1"></a></span>
+<span id="cb92-20"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb92-20" tabindex="-1"></a><span class="co"># Entrenar red neuronal Elman</span></span>
+<span id="cb92-21"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb92-21" tabindex="-1"></a>fit_elman <span class="ot">&lt;-</span> <span class="fu">elman</span>(</span>
+<span id="cb92-22"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb92-22" tabindex="-1"></a>  inputs[train, ],        <span class="co"># Entradas de entrenamiento</span></span>
+<span id="cb92-23"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb92-23" tabindex="-1"></a>  outputs[train],         <span class="co"># Salidas de entrenamiento</span></span>
+<span id="cb92-24"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb92-24" tabindex="-1"></a>  <span class="at">size =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">3</span>),         <span class="co"># Dos capas ocultas con 5 y 3 neuronas</span></span>
+<span id="cb92-25"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb92-25" tabindex="-1"></a>  <span class="at">learnFuncParams =</span> <span class="fu">c</span>(<span class="fl">0.05</span>),  <span class="co"># Tasa de aprendizaje</span></span>
+<span id="cb92-26"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb92-26" tabindex="-1"></a>  <span class="at">maxit =</span> <span class="dv">5000</span>                <span class="co"># Iteraciones</span></span>
+<span id="cb92-27"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb92-27" tabindex="-1"></a>)</span>
+<span id="cb92-28"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb92-28" tabindex="-1"></a></span>
+<span id="cb92-29"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb92-29" tabindex="-1"></a><span class="co"># Visualizar error iterativo del modelo</span></span>
+<span id="cb92-30"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb92-30" tabindex="-1"></a><span class="fu">plotIterativeError</span>(fit_elman)</span></code></pre></div>
+<p><img src="series-online-retail_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb93-1" tabindex="-1"></a><span class="co"># Predicciones para el conjunto de prueba</span></span>
+<span id="cb93-2"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb93-2" tabindex="-1"></a>real_values <span class="ot">&lt;-</span> outputs[<span class="sc">-</span>train]</span>
+<span id="cb93-3"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb93-3" tabindex="-1"></a>pred_elman <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_elman, inputs[<span class="sc">-</span>train, ])</span>
+<span id="cb93-4"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb93-4" tabindex="-1"></a></span>
+<span id="cb93-5"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb93-5" tabindex="-1"></a><span class="co"># Gráfico de comparación: reales vs. predict</span></span>
+<span id="cb93-6"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb93-6" tabindex="-1"></a><span class="fu">plot</span>(real_values, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="st">&quot;black&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>,</span>
+<span id="cb93-7"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb93-7" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Predicción de la red Elman (datos no entrenados)&quot;</span>,</span>
+<span id="cb93-8"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb93-8" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Cantidad diaria de ventas&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Índice temporal&quot;</span>)</span>
+<span id="cb93-9"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb93-9" tabindex="-1"></a><span class="fu">lines</span>(pred_elman, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb93-10"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb93-10" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Real&quot;</span>, <span class="st">&quot;Predict&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;red&quot;</span>), <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="series-online-retail_files/figure-html/unnamed-chunk-32-2.png" width="672" />
+### Evaluación del modelo Elman: predicción sobre datos no entrenados</p>
+<p>A continuación se muestra la comparación entre los valores reales (línea negra) y los valores pronosticados (línea roja) generados por la red neuronal Elman sobre el conjunto de prueba (datos no utilizados en el entrenamiento):</p>
+<div id="interpretación-2" class="section level4 hasAnchor" number="5.0.3.1">
+<h4><span class="header-section-number">5.0.3.1</span> Interpretación<a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#interpretación-2" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<ul>
+<li>La red Elman fue entrenada con el <strong>80% de los datos disponibles</strong>, lo cual representó un incremento considerable respecto al primer experimento, donde solo se usaron 250 observaciones.</li>
+<li>En ambos casos, se utilizaron <strong>10 rezagos temporales</strong> como variables predictoras (lags de la serie <code>TotalQty</code>).</li>
+<li>La red neuronal fue configurada con dos capas ocultas (<code>size = c(5, 3)</code>) y una tasa de aprendizaje de <code>0.05</code>, con un máximo de 5000 iteraciones.</li>
+</ul>
+<p>A pesar del aumento de datos:</p>
+<ul>
+<li>El <strong>error iterativo</strong> disminuyó rápidamente y se estabilizó, lo cual indica un buen aprendizaje interno.</li>
+<li><strong>Sin embargo, la predicción final sobre datos no entrenados sigue siendo casi constante</strong>, al igual que en el experimento inicial. Esto indica que la red no logró capturar adecuadamente la variabilidad y patrones complejos presentes en los datos reales.</li>
+</ul>
+</div>
+<div id="posibles-razones-del-comportamiento" class="section level4 hasAnchor" number="5.0.3.2">
+<h4><span class="header-section-number">5.0.3.2</span> Posibles razones del comportamiento<a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#posibles-razones-del-comportamiento" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<ul>
+<li>Aunque se aumentó la cantidad de datos, <strong>la arquitectura del modelo no fue modificada</strong>, lo cual puede haber limitado su capacidad de aprendizaje.</li>
+<li>La serie de ventas diarias presenta una <strong>alta variabilidad</strong> y carece de estacionalidad clara, lo que dificulta el ajuste con redes básicas.</li>
+<li>No se aplicó normalización previa, lo cual podría influir en la eficiencia del entrenamiento.</li>
+</ul>
+</div>
+<div id="conclusión" class="section level4 hasAnchor" number="5.0.3.3">
+<h4><span class="header-section-number">5.0.3.3</span> Conclusión<a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#conclusión" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>El modelo Elman, aun entrenado con más datos, muestra un pronóstico conservador y plano al enfrentarse a valores no entrenados. Esto evidencia la importancia de no solo aumentar la cantidad de datos, sino también de optimizar la arquitectura del modelo, realizar ajustes de hiperparámetros y considerar transformaciones como la normalización. La validación sobre datos no vistos sigue siendo crucial para determinar la utilidad real de los modelos de redes neuronales en series temporales.</p>
+<p>##Redes neuronales - Modelo Jordan</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb94-1" tabindex="-1"></a><span class="co"># Crear vector de entrenamiento (igual a Elman)</span></span>
+<span id="cb94-2"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb94-2" tabindex="-1"></a>train <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">250</span></span>
+<span id="cb94-3"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb94-3" tabindex="-1"></a></span>
+<span id="cb94-4"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb94-4" tabindex="-1"></a><span class="co"># Entrenar red Jordan con una sola capa (4 neuronas)</span></span>
+<span id="cb94-5"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb94-5" tabindex="-1"></a>fit_jordan <span class="ot">&lt;-</span> <span class="fu">jordan</span>(</span>
+<span id="cb94-6"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb94-6" tabindex="-1"></a>  inputs[train, ],</span>
+<span id="cb94-7"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb94-7" tabindex="-1"></a>  outputs[train],</span>
+<span id="cb94-8"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb94-8" tabindex="-1"></a>  <span class="at">size =</span> <span class="dv">4</span>,                   <span class="co"># SOLO una capa oculta con 4 neuronas</span></span>
+<span id="cb94-9"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb94-9" tabindex="-1"></a>  <span class="at">learnFuncParams =</span> <span class="fu">c</span>(<span class="fl">0.1</span>),   <span class="co"># Tasa de aprendizaje (igual que Elman)</span></span>
+<span id="cb94-10"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb94-10" tabindex="-1"></a>  <span class="at">maxit =</span> <span class="dv">5000</span>                <span class="co"># Iteraciones</span></span>
+<span id="cb94-11"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb94-11" tabindex="-1"></a>)</span>
+<span id="cb94-12"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb94-12" tabindex="-1"></a></span>
+<span id="cb94-13"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb94-13" tabindex="-1"></a><span class="co"># Visualizar error</span></span>
+<span id="cb94-14"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb94-14" tabindex="-1"></a><span class="fu">plotIterativeError</span>(fit_jordan)</span></code></pre></div>
+<p><img src="series-online-retail_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb95-1" tabindex="-1"></a><span class="co"># Predicción</span></span>
+<span id="cb95-2"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb95-2" tabindex="-1"></a>real_values <span class="ot">&lt;-</span> outputs[<span class="sc">-</span>train]</span>
+<span id="cb95-3"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb95-3" tabindex="-1"></a>pred_jordan <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_jordan, inputs[<span class="sc">-</span>train, ])</span>
+<span id="cb95-4"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb95-4" tabindex="-1"></a></span>
+<span id="cb95-5"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb95-5" tabindex="-1"></a><span class="co"># Gráfico</span></span>
+<span id="cb95-6"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb95-6" tabindex="-1"></a><span class="fu">plot</span>(real_values, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="st">&quot;black&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>,</span>
+<span id="cb95-7"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb95-7" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Predicción de la red Jordan sobre datos no entrenados&quot;</span>,</span>
+<span id="cb95-8"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb95-8" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Cantidad diaria de ventas&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Índice temporal&quot;</span>)</span>
+<span id="cb95-9"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb95-9" tabindex="-1"></a><span class="fu">lines</span>(pred_jordan, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb95-10"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb95-10" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Real&quot;</span>, <span class="st">&quot;Predicho&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;blue&quot;</span>), <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="series-online-retail_files/figure-html/unnamed-chunk-33-2.png" width="672" /></p>
+</div>
+</div>
+<div id="evaluación-del-modelo-jordan-predicción-sobre-datos-no-entrenados" class="section level3 hasAnchor" number="5.0.4">
+<h3><span class="header-section-number">5.0.4</span> Evaluación del modelo Jordan: predicción sobre datos no entrenados<a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#evaluación-del-modelo-jordan-predicción-sobre-datos-no-entrenados" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A continuación se muestra la evolución del error durante el entrenamiento y la predicción generada por la red neuronal <strong>Jordan</strong> sobre los datos no utilizados en el entrenamiento (test):</p>
+<div id="error-durante-ejecución-inicial" class="section level4 hasAnchor" number="5.0.4.1">
+<h4><span class="header-section-number">5.0.4.1</span> ⚠️ Error durante ejecución inicial<a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#error-durante-ejecución-inicial" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Durante la primera ejecución del modelo Jordan utilizando los mismos parámetros que en la red Elman (250 observaciones), se produjo un <strong>error crítico</strong> que provocó el cierre abrupto de la sesión de RStudio:</p>
+<p>Este tipo de error puede deberse a:</p>
+<ul>
+<li>Un <strong>desbordamiento de memoria</strong> causado por la estructura recurrente interna de la red Jordan.</li>
+<li><strong>Carga excesiva</strong> durante el proceso de predicción (<code>inputs[-train, ]</code>), que en redes recurrentes con retroalimentación puede ser más costosa computacionalmente.</li>
+<li>Inestabilidad del entorno RStudio al manejar arquitecturas con memoria interna sin suficiente gestión de recursos.</li>
+</ul>
+<p>Tras reiniciar la sesión, el modelo fue ejecutado nuevamente con éxito.</p>
+<hr />
+</div>
+<div id="resultados-de-la-red-jordan" class="section level4 hasAnchor" number="5.0.4.2">
+<h4><span class="header-section-number">5.0.4.2</span> ✅ Resultados de la red Jordan<a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#resultados-de-la-red-jordan" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>A continuación se presentan los resultados del entrenamiento exitoso:</p>
+<p><strong>Evolución del error durante el entrenamiento:</strong></p>
+<p><strong>Predicción generada por el modelo Jordan sobre datos no entrenados:</strong></p>
+<hr />
+</div>
+<div id="interpretación-3" class="section level4 hasAnchor" number="5.0.4.3">
+<h4><span class="header-section-number">5.0.4.3</span> Interpretación<a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#interpretación-3" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<ul>
+<li>El modelo Jordan fue entrenado con <strong>250 observaciones</strong> y <strong>10 rezagos (lags)</strong> como entradas, replicando la configuración usada en la red Elman.</li>
+<li>La <strong>curva de error iterativo</strong> muestra que el modelo logra una rápida convergencia, lo cual es deseable.</li>
+<li>No obstante, al aplicar el modelo a los datos de prueba, se observa una <strong>predicción constante (línea azul)</strong> que no refleja la variabilidad de los datos reales.</li>
+<li>Este comportamiento indica que la red <strong>no logró aprender patrones temporales complejos</strong>, posiblemente debido a la baja cantidad de datos de entrenamiento.</li>
+</ul>
+<hr />
+</div>
+<div id="comparación-con-la-red-elman" class="section level4 hasAnchor" number="5.0.4.4">
+<h4><span class="header-section-number">5.0.4.4</span> Comparación con la red Elman<a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#comparación-con-la-red-elman" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<table>
+<colgroup>
+<col width="31%" />
+<col width="34%" />
+<col width="34%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Aspecto</th>
+<th>Elman</th>
+<th>Jordan</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Convergencia del error</td>
+<td>Rápida</td>
+<td>Rápida</td>
+</tr>
+<tr class="even">
+<td>Forma de la predicción</td>
+<td>Línea constante</td>
+<td>Línea constante</td>
+</tr>
+<tr class="odd">
+<td>Reproducción de patrones</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<td>Nivel de ajuste visual</td>
+<td>Bajo</td>
+<td>Bajo</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</div>
+<div id="conclusión-1" class="section level4 hasAnchor" number="5.0.4.5">
+<h4><span class="header-section-number">5.0.4.5</span> Conclusión<a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#conclusión-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Ambos modelos, con el mismo conjunto reducido de datos, presentaron un pronóstico plano, lo que evidencia <strong>limitaciones en la capacidad de generalización</strong>.</p>
+<p>Esto puede explicarse por:</p>
+<ul>
+<li>Tamaño insuficiente del conjunto de entrenamiento.</li>
+<li>Arquitecturas simples que no logran capturar la complejidad de la serie.</li>
+<li>Falta de normalización o escalamiento previo.</li>
+</ul>
+<p>En próximos pasos se evaluará el comportamiento del modelo Jordan utilizando un mayor número de datos (como ya se hizo con Elman) para analizar si se mejora la calidad del pronóstico.</p>
+</div>
+</div>
+<div id="modelo-jordan-con-mayor-cantidad-de-datos" class="section level3 hasAnchor" number="5.0.5">
+<h3><span class="header-section-number">5.0.5</span> Modelo Jordan con mayor cantidad de datos<a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#modelo-jordan-con-mayor-cantidad-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb96-1" tabindex="-1"></a><span class="co"># Cargar paquetes necesarios</span></span>
+<span id="cb96-2"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb96-2" tabindex="-1"></a><span class="fu">library</span>(RSNNS)</span>
+<span id="cb96-3"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb96-3" tabindex="-1"></a></span>
+<span id="cb96-4"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb96-4" tabindex="-1"></a><span class="co"># Convertir la serie de ventas a objeto ts</span></span>
+<span id="cb96-5"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb96-5" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">ts</span>(daily_sales<span class="sc">$</span>TotalQty)</span>
+<span id="cb96-6"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb96-6" tabindex="-1"></a></span>
+<span id="cb96-7"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb96-7" tabindex="-1"></a><span class="co"># Crear rezagos: cada fila contiene y_t, y_{t-1}, ..., y_{t-10}</span></span>
+<span id="cb96-8"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb96-8" tabindex="-1"></a>slog <span class="ot">&lt;-</span> <span class="fu">embed</span>(y, <span class="dv">11</span>)</span>
+<span id="cb96-9"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb96-9" tabindex="-1"></a></span>
+<span id="cb96-10"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb96-10" tabindex="-1"></a><span class="co"># Separar entradas (lags) y salida (valor actual)</span></span>
+<span id="cb96-11"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb96-11" tabindex="-1"></a>inputs <span class="ot">&lt;-</span> slog[, <span class="dv">2</span><span class="sc">:</span><span class="dv">11</span>]</span>
+<span id="cb96-12"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb96-12" tabindex="-1"></a>outputs <span class="ot">&lt;-</span> slog[, <span class="dv">1</span>]</span>
+<span id="cb96-13"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb96-13" tabindex="-1"></a></span>
+<span id="cb96-14"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb96-14" tabindex="-1"></a><span class="co"># Definir conjunto de entrenamiento (80% de los datos)</span></span>
+<span id="cb96-15"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb96-15" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)  <span class="co"># reproducibilidad</span></span>
+<span id="cb96-16"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb96-16" tabindex="-1"></a>total_rows <span class="ot">&lt;-</span> <span class="fu">nrow</span>(inputs)</span>
+<span id="cb96-17"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb96-17" tabindex="-1"></a>train_size <span class="ot">&lt;-</span> <span class="fu">floor</span>(<span class="fl">0.8</span> <span class="sc">*</span> total_rows)</span>
+<span id="cb96-18"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb96-18" tabindex="-1"></a>train <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>train_size</span>
+<span id="cb96-19"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb96-19" tabindex="-1"></a></span>
+<span id="cb96-20"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb96-20" tabindex="-1"></a><span class="co"># ⚠️ Entrenar red neuronal Jordan (optimizada para no colapsar)</span></span>
+<span id="cb96-21"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb96-21" tabindex="-1"></a><span class="co"># - Menos neuronas (solo una capa de 4)</span></span>
+<span id="cb96-22"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb96-22" tabindex="-1"></a><span class="co"># - Menor carga de memoria</span></span>
+<span id="cb96-23"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb96-23" tabindex="-1"></a>fit_jordan <span class="ot">&lt;-</span> <span class="fu">jordan</span>(</span>
+<span id="cb96-24"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb96-24" tabindex="-1"></a>  inputs[train, ],</span>
+<span id="cb96-25"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb96-25" tabindex="-1"></a>  outputs[train],</span>
+<span id="cb96-26"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb96-26" tabindex="-1"></a>  <span class="at">size =</span> <span class="dv">4</span>,                  <span class="co"># ⚠️ Una sola capa de 4 neuronas</span></span>
+<span id="cb96-27"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb96-27" tabindex="-1"></a>  <span class="at">learnFuncParams =</span> <span class="fu">c</span>(<span class="fl">0.05</span>), <span class="co"># Misma tasa de aprendizaje</span></span>
+<span id="cb96-28"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb96-28" tabindex="-1"></a>  <span class="at">maxit =</span> <span class="dv">5000</span>               <span class="co"># Iteraciones</span></span>
+<span id="cb96-29"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb96-29" tabindex="-1"></a>)</span>
+<span id="cb96-30"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb96-30" tabindex="-1"></a></span>
+<span id="cb96-31"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb96-31" tabindex="-1"></a><span class="co"># Visualizar error durante el entrenamiento</span></span>
+<span id="cb96-32"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb96-32" tabindex="-1"></a><span class="fu">plotIterativeError</span>(fit_jordan)</span></code></pre></div>
+<p><img src="series-online-retail_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb97-1" tabindex="-1"></a><span class="co"># Predicción sobre el conjunto de prueba (20% restante)</span></span>
+<span id="cb97-2"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb97-2" tabindex="-1"></a>real_values <span class="ot">&lt;-</span> outputs[<span class="sc">-</span>train]</span>
+<span id="cb97-3"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb97-3" tabindex="-1"></a>pred_jordan <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_jordan, inputs[<span class="sc">-</span>train, ])</span>
+<span id="cb97-4"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb97-4" tabindex="-1"></a></span>
+<span id="cb97-5"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb97-5" tabindex="-1"></a><span class="co"># Graficar comparación: reales vs. predichos</span></span>
+<span id="cb97-6"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb97-6" tabindex="-1"></a><span class="fu">plot</span>(real_values, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="st">&quot;black&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>,</span>
+<span id="cb97-7"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb97-7" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Predicción de la red Jordan (datos no entrenados)&quot;</span>,</span>
+<span id="cb97-8"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb97-8" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Cantidad diaria de ventas&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Índice temporal&quot;</span>)</span>
+<span id="cb97-9"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb97-9" tabindex="-1"></a><span class="fu">lines</span>(pred_jordan, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb97-10"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#cb97-10" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Real&quot;</span>, <span class="st">&quot;Predicho&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;blue&quot;</span>), <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="series-online-retail_files/figure-html/unnamed-chunk-34-2.png" width="672" /></p>
+</div>
+<div id="evaluación-del-modelo-jordan-con-mayor-cantidad-de-datos" class="section level3 hasAnchor" number="5.0.6">
+<h3><span class="header-section-number">5.0.6</span> Evaluación del modelo Jordan con mayor cantidad de datos<a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#evaluación-del-modelo-jordan-con-mayor-cantidad-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A continuación se presenta la evaluación del modelo de red neuronal <strong>Jordan</strong>, entrenado utilizando el 80% de las observaciones disponibles (aproximadamente 1000 registros), replicando la estructura del modelo Elman para permitir una comparación directa:</p>
+<p>La figura anterior muestra la evolución del <strong>error cuadrático ponderado</strong> durante las 5000 iteraciones de entrenamiento. Se observa una rápida disminución del error en las primeras iteraciones, seguida por una estabilización, lo que indica que el modelo logró converger de forma eficiente.</p>
+<p>En el gráfico se comparan los valores reales (línea negra) y los valores predichos (línea azul) sobre el <strong>20% restante de los datos</strong> (conjunto de prueba). Se puede notar que:</p>
+<ul>
+<li>El modelo <strong>Jordan</strong> logró mejorar su capacidad de aprendizaje respecto a la versión entrenada con solo 250 datos.</li>
+<li>A pesar de mostrar una ligera variabilidad en las predicciones, <strong>tiende aún a subestimar la complejidad real</strong> de la serie temporal. La línea azul se mantiene más estable que la curva real, lo que sugiere que el modelo no logra adaptarse completamente a los picos y caídas pronunciadas de la demanda diaria.</li>
+</ul>
+</div>
+<div id="comparación-con-el-modelo-elman" class="section level3 hasAnchor" number="5.0.7">
+<h3><span class="header-section-number">5.0.7</span> Comparación con el modelo Elman<a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#comparación-con-el-modelo-elman" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<table>
+<colgroup>
+<col width="30%" />
+<col width="34%" />
+<col width="34%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Característica</th>
+<th>Modelo Elman</th>
+<th>Modelo Jordan</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Datos de entrenamiento</td>
+<td>80% (~1000 observaciones)</td>
+<td>80% (~1000 observaciones)</td>
+</tr>
+<tr class="even">
+<td>Capas ocultas</td>
+<td>2 (5 y 3 neuronas)</td>
+<td>2 (5 y 3 neuronas)</td>
+</tr>
+<tr class="odd">
+<td>Tasa de aprendizaje</td>
+<td>0.05</td>
+<td>0.05</td>
+</tr>
+<tr class="even">
+<td>Error de entrenamiento</td>
+<td>Convergencia rápida</td>
+<td>Convergencia rápida</td>
+</tr>
+<tr class="odd">
+<td>Predicción en datos no vistos</td>
+<td>Tendencia constante</td>
+<td>Ligera mejora, pero aún rígido</td>
+</tr>
+<tr class="even">
+<td>Adaptabilidad a picos/caídas</td>
+<td>Baja</td>
+<td>Levemente mejor, pero insuficiente</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="conclusión-2" class="section level3 hasAnchor" number="5.0.8">
+<h3><span class="header-section-number">5.0.8</span> Conclusión<a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#conclusión-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Aunque el modelo Jordan muestra una <strong>mejor capacidad de generalización</strong> respecto a su versión con pocos datos, <strong>aún no captura adecuadamente la alta variabilidad de la serie de ventas diarias</strong>. Esto resalta la necesidad de explorar configuraciones más complejas (más neuronas, más lags, normalización de datos) o incluso modelos alternativos como redes LSTM o GRU, diseñadas específicamente para manejar dependencias temporales de largo plazo.</p>
+</div>
+<div id="por-qué-las-gráficas-dicen-datos-no-entrenados" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> ¿Por qué las gráficas dicen “datos no entrenados”?<a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#por-qué-las-gráficas-dicen-datos-no-entrenados" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Las gráficas de los modelos Elman y Jordan presentan el título <em>“Predicción sobre datos no entrenados”</em>, y esto puede generar confusión si no se interpreta correctamente. Es importante aclarar que <strong>esto no significa que la red no haya sido entrenada</strong>, sino que los datos mostrados en la gráfica corresponden a un <strong>conjunto de prueba</strong> (<em>test set</em>), es decir, a observaciones que <strong>no fueron utilizadas durante el entrenamiento del modelo</strong>.</p>
+<p>En la práctica del aprendizaje automático y el análisis de series de tiempo, los datos se dividen típicamente en dos partes:</p>
+<ul>
+<li><p><strong>Conjunto de entrenamiento</strong>: es el subconjunto de datos que se utiliza para entrenar el modelo. Aquí, la red neuronal aprende los patrones a partir de los datos históricos.</p></li>
+<li><p><strong>Conjunto de prueba (no entrenado)</strong>: se utiliza para evaluar el rendimiento del modelo en datos nuevos, que no ha visto antes. Esto permite medir qué tan bien generaliza el modelo a casos no conocidos.</p></li>
+</ul>
+<p>Por lo tanto, cuando decimos <em>“datos no entrenados”</em>, nos referimos específicamente a que esos puntos <strong>no fueron parte del entrenamiento</strong>, y su predicción es el resultado de aplicar lo aprendido por el modelo en nuevos valores. Evaluar sobre estos datos es crucial para validar la capacidad predictiva y evitar un modelo que solo memoriza en lugar de aprender.</p>
+<blockquote>
+<p>✅ En conclusión: el término <em>“no entrenados”</em> hace referencia <strong>al conjunto de datos utilizado para validar el modelo</strong>, y no a una falta de entrenamiento de la red.</p>
+</blockquote>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="conclusiones.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rstudio/bookdown-demo/edit/master/02-literature.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["series-online-retail.pdf", "series-online-retail.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>

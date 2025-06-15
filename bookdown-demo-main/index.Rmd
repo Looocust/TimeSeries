@@ -1,0 +1,33 @@
+--- 
+title: "Series de tiempo - Online Retail"
+author: "Joaquin Mejia & Deisy Forero"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: looocust/TimeSeries
+description: "Análisis de series de tiempo aplicadas al comportamiento de compras online del 2010 al 2011"
+---
+
+# Propuesta de análisis
+
+## Tema: Pronóstico de comportamiento de compras en e-commerce
+
+El presente análisis utilizará el conjunto de datos “Online Retail” proveniente del repositorio de aprendizaje automático de la Universidad de California en Irvine (UCI Machine Learning Repository). Este dataset contiene transacciones de una empresa minorista en línea del Reino Unido durante el periodo de diciembre de 2010 a diciembre de 2011. Las variables disponibles incluyen número de factura, código y descripción del producto, cantidad, fecha, precio unitario, ID de cliente y país.
+
+### Justificación
+
+El análisis de series de tiempo aplicado a datos de e-commerce permite anticipar comportamientos de compra, optimizar inventarios, planificar campañas promocionales y prever picos de demanda. El valor agregado de este análisis radica en identificar patrones de compra estacionales, detectar tendencias de consumo por producto o país, y generar modelos predictivos que ayuden a mejorar la toma de decisiones estratégicas en comercio electrónico.
+
+Durante este curso, se desarrollará un modelo que permita pronosticar el número de órdenes y/o cantidad total vendida por semana o mes, dependiendo de los hallazgos en el análisis exploratorio. Se buscará capturar estacionalidades propias del retail online, como las temporadas navideñas o promociones puntuales, y su impacto en el comportamiento del cliente. Así mismo, se considerará la descomposición de la serie temporal y la comparación de modelos (ARIMA, Prophet y modelos automatizados).
+
+### Fuente de datos
+
+El conjunto de datos fue obtenido del [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/352/online+retail), es de acceso libre y gratuito, y no requiere permisos especiales para su uso académico. Fue recopilado originalmente por una compañía de e-commerce del Reino Unido y anonimizado para fines investigativos.
+
+### Licencia y permisos
+
+La información es pública y no compromete datos sensibles. Será usada exclusivamente con fines académicos y de aprendizaje en el marco del curso de Análisis de Series de Tiempo de la Pontificia Universidad Javeriana.

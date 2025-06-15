@@ -1,0 +1,17 @@
+# _bookdown.yml  (ajústalo y guarda)
+book_filename: "series-online-retail"
+language:
+  ui:
+    chapter_name: "Capítulo "
+delete_merged_file: true
+
+rmd_files: [
+  "index.Rmd",
+  "01-intro.Rmd",
+  "02-literature.Rmd",   
+  "06-references.Rmd"
+]
+
+# carpeta docs de la RAÍZ del repo
+output_dir: "../docs"
+# quita o cambia la línea toc.before si aún dice "A Minimal Book Example"

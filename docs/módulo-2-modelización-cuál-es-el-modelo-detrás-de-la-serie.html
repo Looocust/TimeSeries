@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 4 Módulo 2: Modelización ¿Cuál es el modelo detrás de la serie? | Series de tiempo - Online Retail</title>
+  <meta name="description" content="Análisis de series de tiempo aplicadas al comportamiento de compras online del 2010 al 2011" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 4 Módulo 2: Modelización ¿Cuál es el modelo detrás de la serie? | Series de tiempo - Online Retail" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Análisis de series de tiempo aplicadas al comportamiento de compras online del 2010 al 2011" />
+  <meta name="github-repo" content="looocust/TimeSeries" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 4 Módulo 2: Modelización ¿Cuál es el modelo detrás de la serie? | Series de tiempo - Online Retail" />
+  
+  <meta name="twitter:description" content="Análisis de series de tiempo aplicadas al comportamiento de compras online del 2010 al 2011" />
+  
+
+<meta name="author" content="Joaquin Mejia &amp; Deisy Forero" />
+
+
+<meta name="date" content="2025-06-15" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="modulo-1.-descripción.-cuál-es-la-dinámica-de-este-tipo-de-datos.html"/>
+<link rel="next" href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Propuesta de análisis</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#tema-pronóstico-de-comportamiento-de-compras-en-e-commerce"><i class="fa fa-check"></i><b>1.1</b> Tema: Pronóstico de comportamiento de compras en e-commerce</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="index.html"><a href="index.html#justificación"><i class="fa fa-check"></i><b>1.1.1</b> Justificación</a></li>
+<li class="chapter" data-level="1.1.2" data-path="index.html"><a href="index.html#fuente-de-datos"><i class="fa fa-check"></i><b>1.1.2</b> Fuente de datos</a></li>
+<li class="chapter" data-level="1.1.3" data-path="index.html"><a href="index.html#licencia-y-permisos"><i class="fa fa-check"></i><b>1.1.3</b> Licencia y permisos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>2</b> Introducción</a></li>
+<li class="chapter" data-level="3" data-path="modulo-1.-descripción.-cuál-es-la-dinámica-de-este-tipo-de-datos.html"><a href="modulo-1.-descripción.-cuál-es-la-dinámica-de-este-tipo-de-datos.html"><i class="fa fa-check"></i><b>3</b> Modulo 1. Descripción. ¿Cuál es la dinámica de este tipo de datos?</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="modulo-1.-descripción.-cuál-es-la-dinámica-de-este-tipo-de-datos.html"><a href="modulo-1.-descripción.-cuál-es-la-dinámica-de-este-tipo-de-datos.html#transformación-box-cox"><i class="fa fa-check"></i><b>3.1</b> Transformación Box-Cox</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><i class="fa fa-check"></i><b>4</b> Módulo 2: Modelización ¿Cuál es el modelo detrás de la serie?</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#pronóstico-con-modelo-holt-winters-aditivo"><i class="fa fa-check"></i><b>4.1</b> Pronóstico con modelo Holt-Winters aditivo</a></li>
+<li class="chapter" data-level="4.2" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#evaluación-y-comparación-de-precisión-ses-vs-holt-winters"><i class="fa fa-check"></i><b>4.2</b> Evaluación y comparación de precisión: SES vs Holt-Winters</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#análisis"><i class="fa fa-check"></i><b>4.2.1</b> Análisis:</a></li>
+<li class="chapter" data-level="4.2.2" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#comparación-visual-de-pronósticos-ses-vs-holt-winters"><i class="fa fa-check"></i><b>4.2.2</b> Comparación visual de pronósticos: SES vs Holt-Winters</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#ajuste-de-modelo-arima-usando-metodología-box-jenkins"><i class="fa fa-check"></i><b>4.3</b> Ajuste de modelo ARIMA usando metodología Box-Jenkins</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#verificación-de-estacionariedad"><i class="fa fa-check"></i><b>4.3.1</b> Verificación de estacionariedad</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#diferencia-de-series---diferenciación-de-primer-orden"><i class="fa fa-check"></i><b>4.4</b> Diferencia de series - Diferenciación de primer orden</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#verificación-de-estacionariedad-sobre-la-serie-diferenciada"><i class="fa fa-check"></i><b>4.4.1</b> Verificación de estacionariedad sobre la serie diferenciada</a></li>
+<li class="chapter" data-level="4.4.2" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#interpretación-conjunta"><i class="fa fa-check"></i><b>4.4.2</b> Interpretación conjunta:</a></li>
+<li class="chapter" data-level="4.4.3" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#paso-3-ajuste-automático-del-modelo-arima"><i class="fa fa-check"></i><b>4.4.3</b> Paso 3: Ajuste automático del modelo ARIMA</a></li>
+<li class="chapter" data-level="4.4.4" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#métricas-del-modelo"><i class="fa fa-check"></i><b>4.4.4</b> Métricas del modelo</a></li>
+<li class="chapter" data-level="4.4.5" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#paso-4-pronóstico-de-ventas-con-modelo-arima510"><i class="fa fa-check"></i><b>4.4.5</b> Paso 4: Pronóstico de ventas con modelo ARIMA(5,1,0)</a></li>
+<li class="chapter" data-level="4.4.6" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#comparación-de-modelos-arima-vs-holt-winters"><i class="fa fa-check"></i><b>4.4.6</b> Comparación de modelos: ARIMA vs Holt-Winters</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#regresión-en-series-de-tiempo"><i class="fa fa-check"></i><b>4.5</b> Regresión en series de tiempo</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#ajuste-del-modelo-prophet-y-visualización-del-pronóstico"><i class="fa fa-check"></i><b>4.5.1</b> Ajuste del modelo Prophet y visualización del pronóstico</a></li>
+<li class="chapter" data-level="4.5.2" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#análisis-de-componentes-del-modelo-prophet"><i class="fa fa-check"></i><b>4.5.2</b> Análisis de Componentes del Modelo Prophet</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#predicción-con-prophet"><i class="fa fa-check"></i><b>4.6</b> Predicción con Prophet</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#visualización-del-pronóstico-con-modelo-prophet"><i class="fa fa-check"></i><b>4.6.1</b> Visualización del pronóstico con modelo Prophet</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html"><i class="fa fa-check"></i><b>5</b> Módulo 3: Pronóstico. Cuál es el comportamiento a futuro de este tipo de observaciones?</a>
+<ul>
+<li class="chapter" data-level="5.0.1" data-path="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#entrenamiento-del-modelo-elman"><i class="fa fa-check"></i><b>5.0.1</b> Entrenamiento del modelo Elman</a></li>
+<li class="chapter" data-level="5.0.2" data-path="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#evaluación-del-modelo-elman-predicción-sobre-datos-no-entrenados"><i class="fa fa-check"></i><b>5.0.2</b> Evaluación del modelo Elman: predicción sobre datos no entrenados</a></li>
+<li class="chapter" data-level="5.0.3" data-path="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#mejorando-el-modelo"><i class="fa fa-check"></i><b>5.0.3</b> Mejorando el modelo</a></li>
+<li class="chapter" data-level="5.0.4" data-path="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#evaluación-del-modelo-jordan-predicción-sobre-datos-no-entrenados"><i class="fa fa-check"></i><b>5.0.4</b> Evaluación del modelo Jordan: predicción sobre datos no entrenados</a></li>
+<li class="chapter" data-level="5.0.5" data-path="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#modelo-jordan-con-mayor-cantidad-de-datos"><i class="fa fa-check"></i><b>5.0.5</b> Modelo Jordan con mayor cantidad de datos</a></li>
+<li class="chapter" data-level="5.0.6" data-path="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#evaluación-del-modelo-jordan-con-mayor-cantidad-de-datos"><i class="fa fa-check"></i><b>5.0.6</b> Evaluación del modelo Jordan con mayor cantidad de datos</a></li>
+<li class="chapter" data-level="5.0.7" data-path="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#comparación-con-el-modelo-elman"><i class="fa fa-check"></i><b>5.0.7</b> Comparación con el modelo Elman</a></li>
+<li class="chapter" data-level="5.0.8" data-path="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#conclusión-2"><i class="fa fa-check"></i><b>5.0.8</b> Conclusión</a></li>
+<li class="chapter" data-level="5.1" data-path="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html"><a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html#por-qué-las-gráficas-dicen-datos-no-entrenados"><i class="fa fa-check"></i><b>5.1</b> ¿Por qué las gráficas dicen “datos no entrenados”?</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="conclusiones.html"><a href="conclusiones.html"><i class="fa fa-check"></i><b>6</b> Conclusiones</a>
+<ul>
+<li class="chapter" data-level="6.0.1" data-path="conclusiones.html"><a href="conclusiones.html#lecciones-interpretativas"><i class="fa fa-check"></i><b>6.0.1</b> Lecciones interpretativas</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i><b>7</b> Referencias</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Series de tiempo - Online Retail</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Capítulo 4</span> Módulo 2: Modelización ¿Cuál es el modelo detrás de la serie?<a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>##Pronóstico con suavizamiento exponencial simple (SES)</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb35-1" tabindex="-1"></a><span class="co"># Ajuste del modelo SES (sin tendencia ni estacionalidad)</span></span>
+<span id="cb35-2"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb35-2" tabindex="-1"></a>ses_model <span class="ot">&lt;-</span> <span class="fu">ses</span>(ts_qty, <span class="at">h =</span> <span class="dv">14</span>)</span>
+<span id="cb35-3"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb35-3" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb35-4" tabindex="-1"></a><span class="co"># Gráfico de predicción SES</span></span>
+<span id="cb35-5"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb35-5" tabindex="-1"></a><span class="fu">autoplot</span>(ses_model) <span class="sc">+</span></span>
+<span id="cb35-6"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb35-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Pronóstico con Suavizamiento Exponencial Simple (SES)&quot;</span>,</span>
+<span id="cb35-7"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb35-7" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Cantidad de ventas diarias&quot;</span>)</span></code></pre></div>
+<p><img src="series-online-retail_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>El modelo SES fue ajustado a la serie de ventas diarias con el objetivo de generar un pronóstico de corto plazo a 14 días. Este modelo da mayor peso a los valores recientes, sin considerar explícitamente ni la tendencia ni la estacionalidad.</p>
+<p>En el gráfico se observa:
+- La línea negra representa los datos históricos.
+- La franja azul representa el pronóstico del modelo.
+- La banda azul más clara indica el intervalo de confianza del 95%.</p>
+<p>Se evidencia que el modelo SES <strong>no capta adecuadamente la tendencia creciente ni la estacionalidad semanal</strong>, lo cual era esperable dado que este modelo es más apropiado para series sin patrones complejos. Aun así, sirve como modelo base de comparación para métodos más avanzados como Holt-Winters.</p>
+<div id="pronóstico-con-modelo-holt-winters-aditivo" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Pronóstico con modelo Holt-Winters aditivo<a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#pronóstico-con-modelo-holt-winters-aditivo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb36-1" tabindex="-1"></a><span class="do">## --- Modelo Holt-Winters aditivo (con tendencia y estacionalidad) ---</span></span>
+<span id="cb36-2"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb36-2" tabindex="-1"></a><span class="co"># Ajuste del modelo Holt-Winters (estacionalidad semanal: frecuencia = 7)</span></span>
+<span id="cb36-3"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb36-3" tabindex="-1"></a>hw_model <span class="ot">&lt;-</span> <span class="fu">hw</span>(ts_qty, <span class="at">seasonal =</span> <span class="st">&quot;additive&quot;</span>, <span class="at">h =</span> <span class="dv">14</span>)</span>
+<span id="cb36-4"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb36-4" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb36-5" tabindex="-1"></a><span class="co"># Gráfico de predicción Holt-Winters</span></span>
+<span id="cb36-6"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb36-6" tabindex="-1"></a><span class="fu">autoplot</span>(hw_model) <span class="sc">+</span></span>
+<span id="cb36-7"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb36-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Pronóstico con modelo Holt-Winters aditivo (14 días)&quot;</span>,</span>
+<span id="cb36-8"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb36-8" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Cantidad de ventas diarias&quot;</span>)</span></code></pre></div>
+<p><img src="series-online-retail_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>Se ajustó el modelo Holt-Winters en su versión aditiva, el cual considera tanto la tendencia como la estacionalidad de la serie. Este modelo es ideal cuando la estacionalidad tiene un efecto constante (suma en lugar de multiplicación), como ocurre con la serie de ventas diarias analizada, la cual presenta un patrón de comportamiento semanal.</p>
+<p>En el gráfico se observa:
+- La línea negra representa los datos históricos.
+- La línea azul muestra el pronóstico a 14 días.
+- La banda azul más clara corresponde al intervalo de confianza del 95%.</p>
+<p>Comparado con el modelo SES, Holt-Winters ofrece un pronóstico más coherente con el comportamiento observado, ya que incorpora la tendencia creciente y el ciclo semanal. Por tanto, se considera una mejor alternativa para la proyección de esta serie.</p>
+</div>
+<div id="evaluación-y-comparación-de-precisión-ses-vs-holt-winters" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Evaluación y comparación de precisión: SES vs Holt-Winters<a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#evaluación-y-comparación-de-precisión-ses-vs-holt-winters" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Para evaluar la calidad del pronóstico generado por los modelos de suavizamiento aplicados (SES y Holt-Winters aditivo), se calcularon las principales métricas de error sobre el conjunto de entrenamiento. Estas métricas incluyen:</p>
+<ul>
+<li><strong>ME (Mean Error)</strong>: Error promedio. Idealmente debe ser cercano a cero.</li>
+<li><strong>RMSE (Root Mean Squared Error)</strong>: Penaliza los errores grandes. Mientras más bajo, mejor.</li>
+<li><strong>MAE (Mean Absolute Error)</strong>: Promedio de los errores absolutos, útil para interpretar la magnitud de los errores.</li>
+<li><strong>MAPE (Mean Absolute Percentage Error)</strong>: Error porcentual promedio. Útil para interpretar errores en escala relativa.</li>
+<li><strong>MASE (Mean Absolute Scaled Error)</strong>: Escala el error absoluto frente a un modelo naïve. Valores menores a 1 indican un mejor desempeño que el modelo naïve.</li>
+<li><strong>ACF1</strong>: Autocorrelación del residuo en el primer rezago. Idealmente debe ser cercana a cero para garantizar independencia en los errores.</li>
+</ul>
+<p>En la siguiente tabla se resumen los resultados de cada modelo:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb37-1" tabindex="-1"></a><span class="co"># Comparar precisión de los modelos usando métricas estándar</span></span>
+<span id="cb37-2"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb37-2" tabindex="-1"></a><span class="fu">accuracy</span>(ses_model)</span></code></pre></div>
+<pre><code>##                   ME     RMSE      MAE       MPE     MAPE      MASE       ACF1
+## Training set 450.271 7739.627 5680.052 -26.05599 50.93325 0.6752243 0.02316609</code></pre>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb39-1" tabindex="-1"></a><span class="fu">accuracy</span>(hw_model)</span></code></pre></div>
+<pre><code>##                    ME     RMSE      MAE       MPE     MAPE      MASE       ACF1
+## Training set 380.1101 7705.517 5653.429 -24.52434 50.07191 0.6720594 0.02793278</code></pre>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb41-1" tabindex="-1"></a><span class="co"># Guardar resultados</span></span>
+<span id="cb41-2"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb41-2" tabindex="-1"></a>ses_acc <span class="ot">&lt;-</span> <span class="fu">accuracy</span>(ses_model)</span>
+<span id="cb41-3"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb41-3" tabindex="-1"></a>hw_acc  <span class="ot">&lt;-</span> <span class="fu">accuracy</span>(hw_model)</span>
+<span id="cb41-4"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb41-4" tabindex="-1"></a></span>
+<span id="cb41-5"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb41-5" tabindex="-1"></a><span class="co"># Unir en una sola tabla</span></span>
+<span id="cb41-6"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb41-6" tabindex="-1"></a>accuracy_comparison <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb41-7"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb41-7" tabindex="-1"></a>  <span class="at">SES =</span> ses_acc,</span>
+<span id="cb41-8"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb41-8" tabindex="-1"></a>  <span class="at">HoltWinters =</span> hw_acc</span>
+<span id="cb41-9"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb41-9" tabindex="-1"></a>)</span>
+<span id="cb41-10"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb41-10" tabindex="-1"></a></span>
+<span id="cb41-11"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb41-11" tabindex="-1"></a><span class="co"># Mostrar con formato bonito</span></span>
+<span id="cb41-12"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb41-12" tabindex="-1"></a><span class="fu">kable</span>(accuracy_comparison, <span class="at">digits =</span> <span class="dv">2</span>, <span class="at">caption =</span> <span class="st">&quot;Comparación de métricas de precisión: SES vs Holt-Winters&quot;</span>)</span></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-11">Table 4.1: </span>Comparación de métricas de precisión: SES vs Holt-Winters</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">ME</th>
+<th align="right">RMSE</th>
+<th align="right">MAE</th>
+<th align="right">MPE</th>
+<th align="right">MAPE</th>
+<th align="right">MASE</th>
+<th align="right">ACF1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Training set</td>
+<td align="right">450.27</td>
+<td align="right">7739.63</td>
+<td align="right">5680.05</td>
+<td align="right">-26.06</td>
+<td align="right">50.93</td>
+<td align="right">0.68</td>
+<td align="right">0.02</td>
+</tr>
+<tr class="even">
+<td align="left">Training set</td>
+<td align="right">380.11</td>
+<td align="right">7705.52</td>
+<td align="right">5653.43</td>
+<td align="right">-24.52</td>
+<td align="right">50.07</td>
+<td align="right">0.67</td>
+<td align="right">0.03</td>
+</tr>
+</tbody>
+</table>
+<div id="análisis" class="section level3 hasAnchor" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> Análisis:<a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#análisis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Los resultados muestran que el modelo Holt-Winters aditivo supera ligeramente
+al modelo de suavizamiento exponencial simple (SES) en la mayoría de las métricas:</p>
+<ul>
+<li><p>El RMSE del modelo Holt-Winters fue de 7705.5, ligeramente inferior al 7739.6 del SES.
+Esto implica que el modelo Holt-Winters logra minimizar de mejor forma los errores grandes.</p></li>
+<li><p>La métrica MAPE, que refleja el error porcentual promedio, fue de 50.07% en Holt-Winters
+frente a 50.93% en SES. Aunque la diferencia es leve, favorece al modelo que incorpora
+tendencia y estacionalidad.</p></li>
+<li><p>El MAE también es ligeramente más bajo en Holt-Winters, confirmando un menor error promedio absoluto.</p></li>
+<li><p>En términos de MASE, ambos modelos tienen valores inferiores a 1 (SES = 0.6752,
+Holt-Winters = 0.6721), lo cual indica que ambos superan a un modelo naïve.
+No obstante, Holt-Winters lo hace con mayor eficiencia.</p></li>
+<li><p>Finalmente, los valores de ACF1 son cercanos a cero en ambos modelos, lo que indica que
+los errores no presentan autocorrelación significativa, cumpliendo con uno de los supuestos
+básicos de los modelos de pronóstico.</p></li>
+</ul>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb42-1" tabindex="-1"></a><span class="co"># Extraer los pronósticos de ambos modelos</span></span>
+<span id="cb42-2"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb42-2" tabindex="-1"></a>ses_pred <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb42-3"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb42-3" tabindex="-1"></a>  <span class="at">Fecha =</span> <span class="fu">time</span>(ses_model<span class="sc">$</span>mean),</span>
+<span id="cb42-4"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb42-4" tabindex="-1"></a>  <span class="at">Prediccion =</span> <span class="fu">as.numeric</span>(ses_model<span class="sc">$</span>mean),</span>
+<span id="cb42-5"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb42-5" tabindex="-1"></a>  <span class="at">Modelo =</span> <span class="st">&quot;SES&quot;</span></span>
+<span id="cb42-6"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb42-6" tabindex="-1"></a>)</span>
+<span id="cb42-7"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb42-7" tabindex="-1"></a></span>
+<span id="cb42-8"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb42-8" tabindex="-1"></a>hw_pred <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb42-9"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb42-9" tabindex="-1"></a>  <span class="at">Fecha =</span> <span class="fu">time</span>(hw_model<span class="sc">$</span>mean),</span>
+<span id="cb42-10"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb42-10" tabindex="-1"></a>  <span class="at">Prediccion =</span> <span class="fu">as.numeric</span>(hw_model<span class="sc">$</span>mean),</span>
+<span id="cb42-11"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb42-11" tabindex="-1"></a>  <span class="at">Modelo =</span> <span class="st">&quot;Holt-Winters&quot;</span></span>
+<span id="cb42-12"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb42-12" tabindex="-1"></a>)</span>
+<span id="cb42-13"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb42-13" tabindex="-1"></a></span>
+<span id="cb42-14"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb42-14" tabindex="-1"></a><span class="co"># Unir en un solo dataset</span></span>
+<span id="cb42-15"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb42-15" tabindex="-1"></a>comparacion_pred <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(ses_pred, hw_pred)</span>
+<span id="cb42-16"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb42-16" tabindex="-1"></a></span>
+<span id="cb42-17"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb42-17" tabindex="-1"></a><span class="co"># Graficar comparando ambos</span></span>
+<span id="cb42-18"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb42-18" tabindex="-1"></a><span class="fu">ggplot</span>(comparacion_pred, <span class="fu">aes</span>(<span class="at">x =</span> Fecha, <span class="at">y =</span> Prediccion, <span class="at">color =</span> Modelo)) <span class="sc">+</span></span>
+<span id="cb42-19"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb42-19" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb42-20"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb42-20" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Comparación de pronósticos: SES vs Holt-Winters&quot;</span>,</span>
+<span id="cb42-21"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb42-21" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Fecha&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Pronóstico de ventas&quot;</span>) <span class="sc">+</span></span>
+<span id="cb42-22"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb42-22" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<pre><code>## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+## ℹ Please use `linewidth` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.</code></pre>
+<p><img src="series-online-retail_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+</div>
+<div id="comparación-visual-de-pronósticos-ses-vs-holt-winters" class="section level3 hasAnchor" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> Comparación visual de pronósticos: SES vs Holt-Winters<a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#comparación-visual-de-pronósticos-ses-vs-holt-winters" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>En la gráfica se comparan los pronósticos generados por los modelos SES y Holt-Winters aditivo para los siguientes 14 días. Se observa claramente que:</p>
+<ul>
+<li>El modelo <strong>SES</strong> (línea azul) genera un pronóstico plano, lo cual es característico de esta técnica al no considerar ni tendencia ni estacionalidad.</li>
+<li>En contraste, el modelo <strong>Holt-Winters</strong> (línea roja) muestra una proyección dinámica que refleja la variabilidad esperada por los patrones semanales presentes en la serie histórica.</li>
+</ul>
+<p>Esto demuestra que el modelo SES resulta limitado para series con comportamiento complejo, mientras que Holt-Winters logra capturar la <strong>estructura de la serie</strong>, ajustando el nivel, la pendiente y la estacionalidad de forma conjunta.</p>
+<p>Visualmente, se confirma lo que ya reflejaban las métricas numéricas: el modelo Holt-Winters aditivo se adapta mejor al comportamiento observado y ofrece un pronóstico más realista para la toma de decisiones.</p>
+</div>
+</div>
+<div id="ajuste-de-modelo-arima-usando-metodología-box-jenkins" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Ajuste de modelo ARIMA usando metodología Box-Jenkins<a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#ajuste-de-modelo-arima-usando-metodología-box-jenkins" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb44-1" tabindex="-1"></a><span class="co"># 1. Verificar estacionariedad </span></span>
+<span id="cb44-2"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb44-2" tabindex="-1"></a> ts_qty <span class="ot">&lt;-</span> <span class="fu">ts</span>(daily_sales<span class="sc">$</span>TotalQty, <span class="at">frequency =</span> <span class="dv">7</span>)</span>
+<span id="cb44-3"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb44-3" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb44-4" tabindex="-1"></a><span class="fu">autoplot</span>(ts_qty) <span class="sc">+</span></span>
+<span id="cb44-5"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb44-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Serie temporal: TotalQty (sin transformar)&quot;</span>,</span>
+<span id="cb44-6"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb44-6" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Cantidad diaria&quot;</span>)</span></code></pre></div>
+<p><img src="series-online-retail_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb45-1" tabindex="-1"></a><span class="fu">library</span>(tseries)</span>
+<span id="cb45-2"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb45-2" tabindex="-1"></a></span>
+<span id="cb45-3"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb45-3" tabindex="-1"></a><span class="fu">adf.test</span>(ts_qty)</span></code></pre></div>
+<pre><code>## Warning in adf.test(ts_qty): p-value smaller than printed p-value</code></pre>
+<pre><code>## 
+##  Augmented Dickey-Fuller Test
+## 
+## data:  ts_qty
+## Dickey-Fuller = -4.2675, Lag order = 6, p-value = 0.01
+## alternative hypothesis: stationary</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb48-1" tabindex="-1"></a><span class="fu">kpss.test</span>(ts_qty, <span class="at">null =</span> <span class="st">&quot;Level&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning in kpss.test(ts_qty, null = &quot;Level&quot;): p-value smaller than printed
+## p-value</code></pre>
+<pre><code>## 
+##  KPSS Test for Level Stationarity
+## 
+## data:  ts_qty
+## KPSS Level = 2.9095, Truncation lag parameter = 5, p-value = 0.01</code></pre>
+<div id="verificación-de-estacionariedad" class="section level3 hasAnchor" number="4.3.1">
+<h3><span class="header-section-number">4.3.1</span> Verificación de estacionariedad<a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#verificación-de-estacionariedad" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Se aplicaron dos pruebas estadísticas complementarias para evaluar la estacionariedad de la serie original <code>TotalQty</code>:</p>
+<ul>
+<li>La prueba de Dickey-Fuller aumentada (ADF) arrojó un p-valor de 0.01, lo que indica evidencia a favor de que la serie es estacionaria.</li>
+<li>La prueba de KPSS, por el contrario, también arrojó un p-valor de 0.01, lo que sugiere que se debe rechazar la hipótesis de estacionariedad.</li>
+</ul>
+<p>Estas pruebas miran la estacionariedad desde enfoques opuestos, por lo que se interpreta que la serie <strong>no es estacionaria en nivel</strong>, pero <strong>podría volverse estacionaria si se elimina la tendencia</strong>. Por ello, se aplicará una diferenciación de primer orden para estabilizar su media.</p>
+</div>
+</div>
+<div id="diferencia-de-series---diferenciación-de-primer-orden" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Diferencia de series - Diferenciación de primer orden<a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#diferencia-de-series---diferenciación-de-primer-orden" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb51-1" tabindex="-1"></a><span class="co"># Diferenciación de primer orden para eliminar tendencia</span></span>
+<span id="cb51-2"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb51-2" tabindex="-1"></a>ts_diff1 <span class="ot">&lt;-</span> <span class="fu">diff</span>(ts_qty, <span class="at">differences =</span> <span class="dv">1</span>)</span>
+<span id="cb51-3"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb51-3" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb51-4" tabindex="-1"></a><span class="co"># Graficar para visualizar el comportamiento</span></span>
+<span id="cb51-5"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb51-5" tabindex="-1"></a><span class="fu">autoplot</span>(ts_diff1) <span class="sc">+</span></span>
+<span id="cb51-6"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb51-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Serie diferenciada (orden 1)&quot;</span>,</span>
+<span id="cb51-7"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb51-7" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Diferencias&quot;</span>)</span></code></pre></div>
+<p><img src="series-online-retail_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>Tras evaluar la estacionariedad de la serie original <code>TotalQty</code>, se detectó que la serie no era estacionaria en nivel, ya que presentaba una tendencia creciente clara. Para cumplir con los requisitos del modelo ARIMA, es necesario trabajar con una serie <strong>estacionaria</strong>, es decir, con media y varianza constantes a lo largo del tiempo.</p>
+<p>Por tanto, se aplicó una <strong>diferenciación de primer orden</strong>, utilizando la función <code>diff(ts_qty, differences = 1)</code>, con el objetivo de eliminar la tendencia determinista presente en los datos. Este procedimiento transforma la serie original en una nueva serie de diferencias entre observaciones consecutivas.</p>
+<p>Al graficar la serie resultante, se puede observar una señal más centrada en torno a cero, con menor evidencia visual de tendencia. Esta transformación es fundamental dentro de la metodología Box-Jenkins, ya que la componente “I” de ARIMA (Integrated) precisamente se refiere a este proceso de integración inversa (diferenciación) para lograr la estacionariedad.</p>
+<p>En este caso, <strong>d = 1</strong>, indicando que la serie requiere una sola diferenciación para volverse estacionaria.</p>
+<div id="verificación-de-estacionariedad-sobre-la-serie-diferenciada" class="section level3 hasAnchor" number="4.4.1">
+<h3><span class="header-section-number">4.4.1</span> Verificación de estacionariedad sobre la serie diferenciada<a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#verificación-de-estacionariedad-sobre-la-serie-diferenciada" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb52-1" tabindex="-1"></a><span class="co"># Pruebas de estacionariedad sobre la serie diferenciada</span></span>
+<span id="cb52-2"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb52-2" tabindex="-1"></a>adf_result_diff <span class="ot">&lt;-</span> <span class="fu">adf.test</span>(ts_diff1)</span></code></pre></div>
+<pre><code>## Warning in adf.test(ts_diff1): p-value smaller than printed p-value</code></pre>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb54-1" tabindex="-1"></a>kpss_result_diff <span class="ot">&lt;-</span> <span class="fu">kpss.test</span>(ts_diff1, <span class="at">null =</span> <span class="st">&quot;Level&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning in kpss.test(ts_diff1, null = &quot;Level&quot;): p-value greater than printed
+## p-value</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb56-1" tabindex="-1"></a><span class="co"># Mostrar los p-valores</span></span>
+<span id="cb56-2"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb56-2" tabindex="-1"></a>adf_result_diff<span class="sc">$</span>p.value</span></code></pre></div>
+<pre><code>## [1] 0.01</code></pre>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb58-1" tabindex="-1"></a>kpss_result_diff<span class="sc">$</span>p.value</span></code></pre></div>
+<pre><code>## [1] 0.1</code></pre>
+<p>Después de aplicar la diferenciación de primer orden para eliminar la tendencia en la serie <code>TotalQty</code>, se procedió a evaluar si la nueva serie (<code>ts_diff1</code>) cumple con la condición de estacionariedad, fundamental para ajustar modelos ARIMA. Para esto, se utilizaron dos pruebas complementarias:</p>
+<ul>
+<li><p><strong>ADF (Augmented Dickey-Fuller):</strong> tiene como hipótesis nula que la serie <strong>NO es estacionaria</strong>. En este caso, el p-valor obtenido fue de <strong>0.01</strong>, lo que permite <strong>rechazar la hipótesis nula</strong> y concluir que la serie es <strong>estacionaria</strong> desde el enfoque de esta prueba.</p></li>
+<li><p><strong>KPSS (Kwiatkowski–Phillips–Schmidt–Shin):</strong> evalúa como hipótesis nula que la serie <strong>sí es estacionaria en nivel</strong>. El p-valor obtenido fue de <strong>0.1</strong>, es decir, <strong>mayor a 0.05</strong>, lo cual indica que <strong>no se rechaza la hipótesis de estacionariedad</strong>.</p></li>
+</ul>
+</div>
+<div id="interpretación-conjunta" class="section level3 hasAnchor" number="4.4.2">
+<h3><span class="header-section-number">4.4.2</span> Interpretación conjunta:<a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#interpretación-conjunta" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Ambas pruebas convergen en su diagnóstico:</p>
+<ul>
+<li>La prueba ADF sugiere que <strong>no hay una raíz unitaria</strong>, por lo que la serie es estacionaria.</li>
+<li>La prueba KPSS no encuentra evidencia suficiente para rechazar que la serie es estacionaria.</li>
+</ul>
+<p>Por lo tanto, se concluye con confianza que la serie diferenciada (<code>ts_diff1</code>) <strong>es estacionaria</strong>, lo cual habilita su uso en la modelación mediante la metodología Box-Jenkins. Se establece así que el modelo ARIMA deberá tener un parámetro de integración <strong>d = 1</strong>, correspondiente a la única diferenciación aplicada.</p>
+</div>
+<div id="paso-3-ajuste-automático-del-modelo-arima" class="section level3 hasAnchor" number="4.4.3">
+<h3><span class="header-section-number">4.4.3</span> Paso 3: Ajuste automático del modelo ARIMA<a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#paso-3-ajuste-automático-del-modelo-arima" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Tras confirmar que la serie <code>TotalQty</code> requería una diferenciación de orden 1 para alcanzar estacionariedad, se procedió a ajustar un modelo ARIMA aplicando la metodología Box-Jenkins, a través de la función <code>auto.arima()</code> del paquete <code>forecast</code>.</p>
+<p>Esta función selecciona de forma automática el modelo óptimo en términos de parsimonia y ajuste, utilizando como criterios de comparación el AIC (Criterio de Información de Akaike) y el BIC (Criterio Bayesiano de Información). Ambos criterios penalizan la complejidad del modelo, favoreciendo estructuras que expliquen bien la serie con el menor número posible de parámetros.</p>
+<p>En este caso, la función identificó como modelo óptimo a:</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb60-1" tabindex="-1"></a><span class="fu">library</span>(forecast)</span>
+<span id="cb60-2"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb60-2" tabindex="-1"></a></span>
+<span id="cb60-3"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb60-3" tabindex="-1"></a><span class="co"># Ajuste automático del modelo ARIMA sobre la serie original</span></span>
+<span id="cb60-4"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb60-4" tabindex="-1"></a>modelo_arima <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(ts_qty, <span class="at">seasonal =</span> <span class="cn">TRUE</span>, <span class="at">stepwise =</span> <span class="cn">FALSE</span>, <span class="at">approximation =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb60-5"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb60-5" tabindex="-1"></a></span>
+<span id="cb60-6"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb60-6" tabindex="-1"></a><span class="co"># Resumen del modelo seleccionado</span></span>
+<span id="cb60-7"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb60-7" tabindex="-1"></a><span class="fu">summary</span>(modelo_arima)</span></code></pre></div>
+<pre><code>## Series: ts_qty 
+## ARIMA(5,1,0) 
+## 
+## Coefficients:
+##           ar1      ar2      ar3      ar4      ar5
+##       -0.8434  -0.7506  -0.6649  -0.6525  -0.4836
+## s.e.   0.0506   0.0599   0.0630   0.0595   0.0511
+## 
+## sigma^2 = 53540270:  log likelihood = -3134.97
+## AIC=6281.93   AICc=6282.21   BIC=6304.23
+## 
+## Training set error measures:
+##                    ME     RMSE     MAE       MPE     MAPE      MASE        ACF1
+## Training set 82.54566 7244.793 5474.85 -20.77992 45.40187 0.6508305 -0.01427987</code></pre>
+<p>Este modelo tiene las siguientes características:</p>
+<p>p = 5: El modelo incluye cinco términos autorregresivos (AR), lo que significa que el valor actual depende linealmente de los últimos cinco valores observados de la serie.</p>
+<p>d = 1: La serie fue diferenciada una vez para estabilizar su media (como se verificó en el paso anterior).</p>
+<p>q = 0: No se incluyeron términos de media móvil (MA), lo que indica que los errores pasados no aportan mejora significativa al ajuste.</p>
+<p>Todos los coeficientes resultaron ser estadísticamente significativos, dado que sus errores estándar son bajos, lo que sugiere que cada uno de ellos contribuye de forma importante a la explicación de la serie.</p>
+<p>El hecho de que todos los coeficientes sean negativos indica un patrón de compensación en la serie: cuando la demanda sube un día, tiende a bajar en los días siguientes, y viceversa. Esto podría reflejar comportamientos de corrección natural o picos transitorios en los volúmenes de venta.</p>
+<p>Además, tener cinco términos AR sugiere que la serie posee memoria considerable: los valores actuales se ven influenciados por un periodo histórico de cinco días, lo cual tiene sentido si consideramos la dinámica logística o comercial detrás de la serie.</p>
+</div>
+<div id="métricas-del-modelo" class="section level3 hasAnchor" number="4.4.4">
+<h3><span class="header-section-number">4.4.4</span> Métricas del modelo<a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#métricas-del-modelo" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>log likelihood = -3134.97: Esta es la log-verosimilitud del modelo ajustado, usada internamente para calcular AIC y BIC.</p>
+<p>AIC = 6281.93 y BIC = 6304.23: Ambos son criterios de penalización por complejidad. Estos valores son relativamente bajos y sirven como referencia para comparar este modelo con otros.</p>
+<p>sigma² = 53,540,270: Varianza del error del modelo. Cuanto menor sea, mejor es el ajuste.</p>
+<table>
+<colgroup>
+<col width="9%" />
+<col width="3%" />
+<col width="87%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Métrica</th>
+<th>Valor</th>
+<th>Interpretación</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>ME</strong> (error medio)</td>
+<td>82.55</td>
+<td>Valor promedio de los errores. Cercano a cero = buen ajuste.</td>
+</tr>
+<tr class="even">
+<td><strong>RMSE</strong></td>
+<td>7244.79</td>
+<td>Raíz del error cuadrático medio. Penaliza errores grandes.</td>
+</tr>
+<tr class="odd">
+<td><strong>MAE</strong></td>
+<td>5474.85</td>
+<td>Error absoluto medio. Estima el error promedio sin exagerar.</td>
+</tr>
+<tr class="even">
+<td><strong>MPE</strong></td>
+<td>-20.77</td>
+<td>Error porcentual medio. Negativo indica ligera sobreestimación.</td>
+</tr>
+<tr class="odd">
+<td><strong>MAPE</strong></td>
+<td>45.40%</td>
+<td>Error porcentual absoluto medio. Aceptable para series comerciales con alta variabilidad.</td>
+</tr>
+<tr class="even">
+<td><strong>MASE</strong></td>
+<td>0.65</td>
+<td>Escala el MAE con respecto a un modelo naive. Menor a 1 ⇒ el modelo es mejor que un pronóstico ingenuo.</td>
+</tr>
+<tr class="odd">
+<td><strong>ACF1</strong></td>
+<td>-0.014</td>
+<td>Autocorrelación del primer rezago de los residuos. Cercano a cero indica que <strong>no hay correlación residual significativa</strong>, es decir, que el modelo capturó bien la estructura de los datos.</td>
+</tr>
+</tbody>
+</table>
+<p>El modelo ARIMA(5,1,0) fue seleccionado automáticamente como el más adecuado para modelar la serie temporal TotalQty. Este modelo captura adecuadamente la dependencia temporal a lo largo de varios días mediante sus componentes autorregresivos, y cumple con los supuestos requeridos: los residuos son no correlacionados, la serie es estacionaria tras la diferenciación, y los errores del modelo son razonablemente bajos.</p>
+<p>Dado su buen desempeño en términos de ajuste, parsimonia y diagnóstico, este modelo será utilizado para generar el pronóstico en el siguiente paso.</p>
+</div>
+<div id="paso-4-pronóstico-de-ventas-con-modelo-arima510" class="section level3 hasAnchor" number="4.4.5">
+<h3><span class="header-section-number">4.4.5</span> Paso 4: Pronóstico de ventas con modelo ARIMA(5,1,0)<a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#paso-4-pronóstico-de-ventas-con-modelo-arima510" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Una vez ajustado el modelo ARIMA(5,1,0), se procedió a generar un pronóstico para los próximos 14 días utilizando la función <code>forecast()</code>. Esta predicción se basa en el comportamiento aprendido por el modelo a partir de la serie histórica, considerando las relaciones autorregresivas y la diferenciación aplicada.</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb62-1" tabindex="-1"></a><span class="co"># Generar pronóstico de los próximos 14 días con el modelo ARIMA</span></span>
+<span id="cb62-2"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb62-2" tabindex="-1"></a>forecast_arima <span class="ot">&lt;-</span> <span class="fu">forecast</span>(modelo_arima, <span class="at">h =</span> <span class="dv">14</span>)</span>
+<span id="cb62-3"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb62-3" tabindex="-1"></a></span>
+<span id="cb62-4"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb62-4" tabindex="-1"></a><span class="co"># Visualizar el pronóstico</span></span>
+<span id="cb62-5"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb62-5" tabindex="-1"></a><span class="fu">autoplot</span>(forecast_arima) <span class="sc">+</span></span>
+<span id="cb62-6"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb62-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Pronóstico de ventas con modelo ARIMA(5,1,0)&quot;</span>,</span>
+<span id="cb62-7"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb62-7" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Cantidad diaria de ventas&quot;</span>)</span></code></pre></div>
+<p><img src="series-online-retail_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>El gráfico generado muestra tres elementos clave:</p>
+<ul>
+<li>La serie histórica original (<code>TotalQty</code>), que permite comparar visualmente el pronóstico con los datos observados.</li>
+<li>La línea azul central, que representa el valor esperado (predicción puntual) para cada uno de los próximos 14 días.</li>
+<li>Las bandas de color azul claro, que representan los <strong>intervalos de confianza</strong> al 80% y 95%, es decir, los rangos dentro de los cuales se espera que caiga la demanda futura con alta probabilidad.</li>
+</ul>
+<p>El modelo proyecta un comportamiento relativamente estable, aunque sujeto a la variabilidad natural de la serie. La amplitud de las bandas de predicción refleja la incertidumbre creciente a medida que se avanza en el horizonte de pronóstico, lo cual es esperado en modelos de series temporales.</p>
+<p>Esta visualización resulta útil para la toma de decisiones en planificación de inventario, abastecimiento o personal, ya que permite anticipar posibles picos o caídas en la demanda de manera cuantitativa y visualmente intuitiva.</p>
+</div>
+<div id="comparación-de-modelos-arima-vs-holt-winters" class="section level3 hasAnchor" number="4.4.6">
+<h3><span class="header-section-number">4.4.6</span> Comparación de modelos: ARIMA vs Holt-Winters<a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#comparación-de-modelos-arima-vs-holt-winters" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Con el fin de enriquecer el análisis, se realizó una comparación directa entre el modelo ARIMA(5,1,0) y el modelo Holt-Winters aditivo, ambos ajustados previamente sobre la serie <code>TotalQty</code>. Se generaron pronósticos a 14 días y se representaron en un mismo gráfico.</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb63-1" tabindex="-1"></a><span class="co"># Crear data frames con los pronósticos</span></span>
+<span id="cb63-2"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb63-2" tabindex="-1"></a>df_hw <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb63-3"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb63-3" tabindex="-1"></a>  <span class="at">Fecha =</span> <span class="fu">time</span>(hw_model<span class="sc">$</span>mean),</span>
+<span id="cb63-4"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb63-4" tabindex="-1"></a>  <span class="at">Valor =</span> <span class="fu">as.numeric</span>(hw_model<span class="sc">$</span>mean),</span>
+<span id="cb63-5"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb63-5" tabindex="-1"></a>  <span class="at">Modelo =</span> <span class="st">&quot;Holt-Winters&quot;</span></span>
+<span id="cb63-6"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb63-6" tabindex="-1"></a>)</span>
+<span id="cb63-7"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb63-7" tabindex="-1"></a></span>
+<span id="cb63-8"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb63-8" tabindex="-1"></a>df_arima <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb63-9"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb63-9" tabindex="-1"></a>  <span class="at">Fecha =</span> <span class="fu">time</span>(forecast_arima<span class="sc">$</span>mean),</span>
+<span id="cb63-10"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb63-10" tabindex="-1"></a>  <span class="at">Valor =</span> <span class="fu">as.numeric</span>(forecast_arima<span class="sc">$</span>mean),</span>
+<span id="cb63-11"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb63-11" tabindex="-1"></a>  <span class="at">Modelo =</span> <span class="st">&quot;ARIMA(5,1,0)&quot;</span></span>
+<span id="cb63-12"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb63-12" tabindex="-1"></a>)</span>
+<span id="cb63-13"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb63-13" tabindex="-1"></a></span>
+<span id="cb63-14"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb63-14" tabindex="-1"></a><span class="co"># Unir los pronósticos</span></span>
+<span id="cb63-15"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb63-15" tabindex="-1"></a>df_comb <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(df_hw, df_arima)</span>
+<span id="cb63-16"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb63-16" tabindex="-1"></a></span>
+<span id="cb63-17"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb63-17" tabindex="-1"></a><span class="co"># Gráfico comparativo</span></span>
+<span id="cb63-18"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb63-18" tabindex="-1"></a><span class="fu">ggplot</span>(df_comb, <span class="fu">aes</span>(<span class="at">x =</span> Fecha, <span class="at">y =</span> Valor, <span class="at">color =</span> Modelo)) <span class="sc">+</span></span>
+<span id="cb63-19"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb63-19" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb63-20"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb63-20" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Comparación de pronósticos: ARIMA vs Holt-Winters&quot;</span>,</span>
+<span id="cb63-21"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb63-21" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Fecha&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Pronóstico de ventas&quot;</span>) <span class="sc">+</span></span>
+<span id="cb63-22"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb63-22" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="series-online-retail_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p>Ambos modelos presentan trayectorias similares, pero con matices importantes:</p>
+<ul>
+<li>El modelo <strong>ARIMA(5,1,0)</strong> genera un pronóstico más suave, con menor variabilidad, reflejando la lógica de un modelo autorregresivo que suaviza los valores extremos al basarse en una combinación lineal de rezagos.</li>
+<li>El modelo <strong>Holt-Winters aditivo</strong> captura con mayor sensibilidad las fluctuaciones recientes, manteniendo la estructura estacional y de tendencia, lo que le otorga mayor reactividad, aunque puede estar más expuesto al ruido.</li>
+</ul>
+<p>Esta comparación permite tomar decisiones y elegir el modelo más adecuado según el contexto:</p>
+<ul>
+<li>El modelo <strong>Holt-Winters</strong> muestra una proyección más <strong>suavizada y continua</strong>, lo cual es típico de los modelos de suavizamiento exponencial, ya que incorporan tendencia y estacionalidad explícitamente.</li>
+<li>El modelo <strong>ARIMA(5,1,0)</strong> presenta una <strong>mayor variabilidad</strong> en el pronóstico, con oscilaciones más marcadas entre días, reflejando su naturaleza autorregresiva, donde los valores futuros están determinados por una combinación lineal de los rezagos previos.</li>
+<li>A pesar de que ambos modelos siguen un patrón similar, el modelo Holt-Winters parece conservar más la tendencia observada al final de la serie histórica, mientras que ARIMA muestra correcciones rápidas hacia la media.</li>
+</ul>
+<div id="interpretación" class="section level4 hasAnchor" number="4.4.6.1">
+<h4><span class="header-section-number">4.4.6.1</span> Interpretación:<a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#interpretación" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Ambos modelos proporcionan estimaciones útiles pero con enfoques diferentes. La elección entre uno u otro dependerá del contexto operativo:</p>
+<ul>
+<li>Si se desea un modelo <strong>más conservador y estable</strong>, que siga suavemente la tendencia general, <strong>Holt-Winters</strong> puede ser más adecuado.</li>
+<li>Si se requiere un modelo <strong>más sensible a cambios recientes</strong> y con mayor respuesta a la estructura histórica de corto plazo, <strong>ARIMA</strong> puede ser preferido.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="regresión-en-series-de-tiempo" class="section level2 hasAnchor" number="4.5">
+<h2><span class="header-section-number">4.5</span> Regresión en series de tiempo<a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#regresión-en-series-de-tiempo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>El modelo Prophet requiere que los datos a utilizar tengan dos columnas con nombres específicos:
+- <code>ds</code>: la columna que contiene las fechas (Date Stamp).
+- <code>y</code>: la variable numérica a modelar y pronosticar.</p>
+<p>Para cumplir con esta estructura, se construyó un nuevo data frame llamado <code>df_prophet</code>, a partir del conjunto <code>daily_sales</code>, renombrando la columna <code>Date</code> como <code>ds</code> y <code>TotalQty</code> como <code>y</code>.</p>
+<p>A continuación, se muestran las primeras 10 observaciones del conjunto <code>df_prophet</code> para verificar que los datos están correctamente organizados:</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb64-1" tabindex="-1"></a><span class="co"># Prophet requiere una columna &#39;ds&#39; (fecha) y una columna &#39;y&#39; (valor numérico)</span></span>
+<span id="cb64-2"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb64-2" tabindex="-1"></a>df_prophet <span class="ot">&lt;-</span> daily_sales <span class="sc">%&gt;%</span></span>
+<span id="cb64-3"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb64-3" tabindex="-1"></a>  <span class="fu">select</span>(Date, TotalQty) <span class="sc">%&gt;%</span></span>
+<span id="cb64-4"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb64-4" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">ds =</span> Date, <span class="at">y =</span> TotalQty)</span>
+<span id="cb64-5"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb64-5" tabindex="-1"></a></span>
+<span id="cb64-6"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb64-6" tabindex="-1"></a><span class="fu">head</span>(df_prophet, <span class="dv">10</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 10 × 2
+##    ds             y
+##    &lt;date&gt;     &lt;dbl&gt;
+##  1 2010-12-01 26814
+##  2 2010-12-02 21023
+##  3 2010-12-03 14830
+##  4 2010-12-05 16395
+##  5 2010-12-06 21419
+##  6 2010-12-07 24995
+##  7 2010-12-08 22741
+##  8 2010-12-09 18431
+##  9 2010-12-10 20297
+## 10 2010-12-12 10565</code></pre>
+<div id="ajuste-del-modelo-prophet-y-visualización-del-pronóstico" class="section level3 hasAnchor" number="4.5.1">
+<h3><span class="header-section-number">4.5.1</span> Ajuste del modelo Prophet y visualización del pronóstico<a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#ajuste-del-modelo-prophet-y-visualización-del-pronóstico" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Una vez preparados los datos, se procedió al ajuste del modelo <code>Prophet</code>, una herramienta desarrollada por Facebook para la predicción de series de tiempo con tendencia y estacionalidad. Prophet es especialmente útil para datos con ciclos estacionales regulares y capacidad de incorporar eventos futuros (como festivos o promociones), aunque en este caso se usó en su forma básica.</p>
+<p>Se utilizó el data frame <code>df_prophet</code>, que contiene las fechas (<code>ds</code>) y las cantidades diarias (<code>y</code>). El modelo se entrenó sobre estos datos, y se generó una proyección de los siguientes <strong>14 días</strong>.</p>
+<p>El resultado se visualiza mediante un gráfico que muestra tres elementos principales:</p>
+<ul>
+<li>La <strong>línea negra</strong> representa la evolución histórica de la variable.</li>
+<li>La <strong>línea azul</strong> en el tramo final muestra el valor estimado del pronóstico diario.</li>
+<li>Las <strong>bandas sombreadas azules</strong> reflejan los intervalos de confianza del 80% y 95%, lo que permite visualizar la incertidumbre del modelo sobre posibles escenarios futuros.</li>
+</ul>
+<p>Este tipo de pronóstico es de gran utilidad en contextos como inventarios, planeación de recursos o estimaciones de demanda, donde anticipar variaciones es clave para la toma de decisiones.</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb66-1" tabindex="-1"></a><span class="co"># Ajustar el modelo Prophet a los datos</span></span>
+<span id="cb66-2"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb66-2" tabindex="-1"></a>modelo_prophet <span class="ot">&lt;-</span> <span class="fu">prophet</span>(df_prophet)</span></code></pre></div>
+<pre><code>## Disabling yearly seasonality. Run prophet with yearly.seasonality=TRUE to override this.</code></pre>
+<pre><code>## Disabling daily seasonality. Run prophet with daily.seasonality=TRUE to override this.</code></pre>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb69-1" tabindex="-1"></a><span class="co"># Generar fechas futuras para 14 días más</span></span>
+<span id="cb69-2"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb69-2" tabindex="-1"></a>futuro <span class="ot">&lt;-</span> <span class="fu">make_future_dataframe</span>(modelo_prophet, <span class="at">periods =</span> <span class="dv">14</span>)</span>
+<span id="cb69-3"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb69-3" tabindex="-1"></a></span>
+<span id="cb69-4"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb69-4" tabindex="-1"></a><span class="co"># Realizar el pronóstico</span></span>
+<span id="cb69-5"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb69-5" tabindex="-1"></a>pronostico_prophet <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo_prophet, futuro)</span>
+<span id="cb69-6"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb69-6" tabindex="-1"></a></span>
+<span id="cb69-7"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb69-7" tabindex="-1"></a><span class="co"># Visualizar el pronóstico</span></span>
+<span id="cb69-8"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb69-8" tabindex="-1"></a><span class="fu">plot</span>(modelo_prophet, pronostico_prophet) <span class="sc">+</span></span>
+<span id="cb69-9"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb69-9" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Pronóstico de ventas con modelo Prophet&quot;</span>,</span>
+<span id="cb69-10"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb69-10" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Cantidad de ventas&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Fecha&quot;</span>)</span></code></pre></div>
+<p><img src="series-online-retail_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p>La gráfica representa el resultado del modelo <code>Prophet</code> aplicado a la serie temporal de ventas diarias, proyectando el comportamiento para los siguientes 14 días. Este modelo incorpora <strong>tendencia</strong>, <strong>estacionalidad</strong> y <strong>variación aleatoria (ruido)</strong> para hacer sus predicciones. La visualización incluye los siguientes elementos clave:</p>
+<ul>
+<li><strong>Puntos negros</strong>: corresponden a los valores reales de ventas observadas a lo largo del tiempo. Nos muestran la historia de la demanda hasta la fecha más reciente del conjunto de datos.</li>
+<li><strong>Línea azul</strong>: representa la predicción central del modelo Prophet. Es el valor esperado (estimado) para cada día, incluyendo tanto la tendencia como la estacionalidad identificadas por el modelo.</li>
+<li><strong>Bandas azul claro</strong>: son los <strong>intervalos de confianza</strong> del 80% y 95%, los cuales indican el rango de valores dentro de los cuales se espera que caiga la demanda futura. Como es común en series temporales, la incertidumbre (anchura de las bandas) aumenta a medida que avanzamos en el tiempo.</li>
+</ul>
+<div id="análisis-general-del-gráfico" class="section level4 hasAnchor" number="4.5.1.1">
+<h4><span class="header-section-number">4.5.1.1</span> Análisis general del gráfico<a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#análisis-general-del-gráfico" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<ul>
+<li>El modelo detecta <strong>una tendencia creciente</strong> a lo largo del año. Desde mediados de 2011 se observa un ascenso más pronunciado, capturado por la curva azul.</li>
+<li>También se evidencian <strong>fluctuaciones estacionales regulares</strong>, es decir, patrones de subida y bajada que se repiten semanalmente, ajustándose a picos de consumo cíclicos.</li>
+<li>Los puntos reales (negros) se alinean razonablemente con las predicciones, lo cual sugiere que el modelo ha aprendido correctamente la estructura subyacente de la serie.</li>
+</ul>
+<p>Este tipo de pronóstico es útil para anticipar aumentos o disminuciones en la demanda y planificar recursos. Prophet ofrece una herramienta flexible y robusta, especialmente cuando existen componentes como <strong>estacionalidad semanal o anual</strong>, y cuando los datos muestran comportamientos no lineales. La visualización generada permite comunicar los resultados de forma clara y confiable a distintos actores de una organización.</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb70-1" tabindex="-1"></a><span class="co"># Mostrar los componentes del modelo Prophet</span></span>
+<span id="cb70-2"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb70-2" tabindex="-1"></a><span class="fu">prophet_plot_components</span>(modelo_prophet, pronostico_prophet)</span></code></pre></div>
+<p><img src="series-online-retail_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+</div>
+</div>
+<div id="análisis-de-componentes-del-modelo-prophet" class="section level3 hasAnchor" number="4.5.2">
+<h3><span class="header-section-number">4.5.2</span> Análisis de Componentes del Modelo Prophet<a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#análisis-de-componentes-del-modelo-prophet" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Luego del ajuste del modelo Prophet, se analizaron sus componentes internos para entender mejor el comportamiento de la serie temporal. El gráfico generado por prophet_plot_components() descompone la serie en dos principales factores:</p>
+<ol style="list-style-type: decimal">
+<li><p>Tendencia (trend)
+La curva de tendencia muestra una evolución general ascendente en la cantidad de ventas a lo largo del tiempo. Inicialmente, la serie se mantiene relativamente estable hasta marzo-abril de 2011, para luego acelerar su crecimiento de forma sostenida, alcanzando su punto más alto en diciembre de 2011. Este comportamiento sugiere una tendencia positiva de largo plazo, posiblemente asociada a un crecimiento en la demanda o a factores estructurales dentro del negocio.</p></li>
+<li><p>Estacionalidad semanal (weekly)
+El componente estacional muestra cómo varían las ventas a lo largo de los días de la semana:</p></li>
+</ol>
+<p>Domingos presentan el nivel más bajo de ventas, con un valor significativamente negativo.</p>
+<p>Sábados y jueves muestran los picos más altos de la semana, indicando que podrían ser días clave para la actividad comercial.</p>
+<p>Los demás días (lunes a miércoles) presentan valores más estables y cercanos a la media.</p>
+<p>Este patrón semanal es de gran valor para la planificación operativa y de inventario, ya que permite anticipar la carga de trabajo según el día de la semana.</p>
+</div>
+</div>
+<div id="predicción-con-prophet" class="section level2 hasAnchor" number="4.6">
+<h2><span class="header-section-number">4.6</span> Predicción con Prophet<a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#predicción-con-prophet" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>En este paso, se utilizó la función <code>predict()</code> para generar un pronóstico basado en el modelo Prophet previamente entrenado. La predicción se realizó sobre el objeto <code>futuro</code>, el cual contiene 14 días adicionales más allá del conjunto de datos original.</p>
+<p>Este pronóstico estima la cantidad diaria de ventas futuras, considerando los componentes aprendidos por el modelo: tendencia, estacionalidad semanal y la posible incertidumbre capturada por el modelo bayesiano de Prophet. El resultado se almacena en el objeto <code>forecast_prophet</code>, que incluye tanto los valores estimados (<code>yhat</code>) como los intervalos de confianza (<code>yhat_lower</code>, <code>yhat_upper</code>) y los componentes separados de tendencia y estacionalidad.</p>
+<p>Esta etapa es esencial para convertir el modelo ajustado en una herramienta de análisis predictivo, brindando información clave para la toma de decisiones.</p>
+<p>Una vez entrenado el modelo <code>Prophet</code>, se procedió a generar un pronóstico para los siguientes 14 días utilizando la función <code>predict()</code>. Esta función devuelve una tabla extensa que incluye:</p>
+<ul>
+<li><code>ds</code>: la fecha correspondiente al pronóstico.</li>
+<li><code>yhat</code>: el valor estimado de ventas (pronóstico puntual).</li>
+<li><code>yhat_lower</code> y <code>yhat_upper</code>: los límites inferior y superior del intervalo de confianza, reflejando la incertidumbre del modelo.</li>
+</ul>
+<p>A continuación, se presentan los primeros 10 días del pronóstico:</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb71-1" tabindex="-1"></a><span class="co"># Paso 5: Realizar predicción con modelo Prophet</span></span>
+<span id="cb71-2"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb71-2" tabindex="-1"></a>forecast_prophet <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo_prophet, futuro)</span>
+<span id="cb71-3"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb71-3" tabindex="-1"></a></span>
+<span id="cb71-4"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb71-4" tabindex="-1"></a><span class="co"># Ver las primeras filas del resultado</span></span>
+<span id="cb71-5"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb71-5" tabindex="-1"></a><span class="fu">head</span>(forecast_prophet[, <span class="fu">c</span>(<span class="st">&quot;ds&quot;</span>, <span class="st">&quot;yhat&quot;</span>, <span class="st">&quot;yhat_lower&quot;</span>, <span class="st">&quot;yhat_upper&quot;</span>)], <span class="dv">14</span>)</span></code></pre></div>
+<pre><code>##            ds      yhat yhat_lower yhat_upper
+## 1  2010-12-01 14984.677   7218.682   23757.16
+## 2  2010-12-02 18677.764  10136.463   27240.65
+## 3  2010-12-03 12301.689   4415.796   20818.82
+## 4  2010-12-05  5955.892  -2372.475   14532.56
+## 5  2010-12-06 13820.646   5778.655   22648.82
+## 6  2010-12-07 15131.844   7158.365   23554.69
+## 7  2010-12-08 14955.427   6899.923   23354.40
+## 8  2010-12-09 18648.513  10199.721   27244.01
+## 9  2010-12-10 12272.438   3443.216   20996.00
+## 10 2010-12-12  5926.642  -2438.790   13588.46
+## 11 2010-12-13 13791.396   5442.553   22497.94
+## 12 2010-12-14 15102.593   6344.085   23023.89
+## 13 2010-12-15 14926.176   6357.617   22720.15
+## 14 2010-12-16 18619.262  10530.711   26783.39</code></pre>
+<div id="visualización-del-pronóstico-con-modelo-prophet" class="section level3 hasAnchor" number="4.6.1">
+<h3><span class="header-section-number">4.6.1</span> Visualización del pronóstico con modelo Prophet<a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#visualización-del-pronóstico-con-modelo-prophet" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>La siguiente gráfica muestra el pronóstico generado por el modelo Prophet para los próximos 14 días, sobre la serie de ventas diarias:</p>
+<ul>
+<li>La <strong>línea azul</strong> representa la predicción puntual (<code>yhat</code>), es decir, el valor estimado de ventas para cada fecha.</li>
+<li>Las <strong>bandas en azul claro</strong> corresponden a los intervalos de confianza del 80% y 95%, los cuales reflejan la <strong>incertidumbre del modelo</strong>. A medida que se avanza en el tiempo, estas bandas suelen ensancharse, lo que indica un aumento en la incertidumbre del pronóstico.</li>
+<li>Los <strong>puntos negros</strong> representan los valores observados históricos de la variable <code>TotalQty</code>, permitiendo comparar el ajuste del modelo a los datos reales.</li>
+</ul>
+<p>Esta visualización es útil no solo para validar la calidad del modelo, sino también para apoyar decisiones estratégicas relacionadas con planificación operativa, previsión de demanda o abastecimiento, ya que permite anticipar periodos de alta o baja en las ventas.</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb73-1" tabindex="-1"></a><span class="co"># Paso 6: Visualización del pronóstico con Prophet</span></span>
+<span id="cb73-2"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb73-2" tabindex="-1"></a><span class="fu">plot</span>(modelo_prophet, forecast_prophet) <span class="sc">+</span></span>
+<span id="cb73-3"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb73-3" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Pronóstico con modelo Prophet&quot;</span>) <span class="sc">+</span></span>
+<span id="cb73-4"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb73-4" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Cantidad de ventas diarias&quot;</span>) <span class="sc">+</span></span>
+<span id="cb73-5"><a href="módulo-2-modelización-cuál-es-el-modelo-detrás-de-la-serie.html#cb73-5" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Fecha&quot;</span>)</span></code></pre></div>
+<p><img src="series-online-retail_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<ul>
+<li>La tendencia es <strong>creciente a partir de mediados de 2011</strong>, lo cual sugiere un aumento sostenido en la demanda.</li>
+<li>La estacionalidad <strong>se repite semanalmente</strong>, como se observa en el patrón de “ondas” regulares a lo largo de toda la serie.</li>
+<li>Los valores reales se encuentran mayoritariamente <strong>dentro de los intervalos de confianza</strong>, lo cual valida la capacidad del modelo para captar correctamente los patrones subyacentes.</li>
+<li>Esta herramienta es especialmente útil para la <strong>planificación operativa</strong> (abastecimiento, producción, personal), ya que permite anticipar con cierto grado de certeza los niveles esperados de demanda en el corto plazo.</li>
+</ul>
+<p>En resumen, el modelo Prophet ha logrado captar tanto la tendencia como la estacionalidad semanal de forma adecuada, proporcionando un pronóstico robusto y visualmente interpretable.</p>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="modulo-1.-descripción.-cuál-es-la-dinámica-de-este-tipo-de-datos.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="módulo-3-pronóstico.-cuál-es-el-comportamiento-a-futuro-de-este-tipo-de-observaciones.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rstudio/bookdown-demo/edit/master/02-literature.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["series-online-retail.pdf", "series-online-retail.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>
